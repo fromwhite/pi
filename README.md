@@ -10,7 +10,6 @@
 git clone git@github.com:shui14/BBLab.git
 cd BBLab
 cmake
-
 ```
 
 ###Future
