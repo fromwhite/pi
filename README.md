@@ -4,11 +4,6 @@
  * wifi wlan
  * usb-camera
 
-###git
-```
-git clone git@github.com:shui14/BBLab.git
-```
-
 ###Future
 * nas
 * opencv
