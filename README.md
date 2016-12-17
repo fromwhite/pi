@@ -1,22 +1,17 @@
 ###beaglebone black lab. 
 
- * debian on SoC
- * ssh
+ * debian on soc
  * wifi wlan
  * usb-camera
 
-###own & pick
+###git
 ```
 git clone git@github.com:shui14/BBLab.git
-cd BBLab
 ```
 
 ###Future
 * nas
 * opencv
-
-###Discussing
-* email <shui.14@qq.com>
 
 ##快速上手
 ###查看本机信息
@@ -110,9 +105,9 @@ bash 2342 root 3r DIR 8,1 16384 1 /mnt/usb/
 ###扩容sd卡
 调整分区大小的shell脚本内置到debian系统中，位于/opt/scripts/tools路径下grow_partition.sh
 进入tools路径后，可用ls -l命令查看
-增加x 
+增加权限 
 ```
-chmod u+x hello.sh
+chmod u+x grow_partition.sh
 ```
 输入
 ```
