@@ -1,10 +1,10 @@
-###beaglebone black lab. 
+### beaglebone black lab. 
 
  * debian on soc
  * wifi wlan
  * usb-camera
 
-###Future
+### Future
 * nas
 * opencv
 
