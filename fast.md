@@ -1,7 +1,7 @@
-##快速上手
+## 快速上手
 **************
 
-###常用
+### 常用
 ```
 su切换用户
 exit从普通用户退出进入root
@@ -11,7 +11,7 @@ passwd user更改密码
 换源前备份 /etc/apt/sources.list    cmd:cp sources.list ./sources.list.bak
 ```
 
-###查看本机信息
+### 查看本机信息
 ```
 lsb_release -a
 cat /proc/version
@@ -20,14 +20,14 @@ df -h
 netstat -lnp
 ```
 
-###更新 先换阿里源jessie
+### 更新 先换阿里源jessie
 ```
 sudo apt-get update
 sudo apt-get upgrade
 sudo reboot
 ```
 
-###wifi设置
+### wifi设置
 
 方法一
 连接bbb，打开浏览器，输入http://192.168.8.1/login，可以在里面选择要连接的上级路由器并设置相应的密码
@@ -95,11 +95,11 @@ bash 2342 root 3r DIR 8,1 16384 1 /mnt/usb/
 记得查看 fdisk -l  或者df -h   less -f查看文件
 
 
-###从sd卡开机
+### 从sd卡开机
 默认优先引导sd卡的镜像 sd不存在或者没有可运行的系统时就引导板载emmc
 从ti下载最新镜像 写入sd卡 reboot
 
-###扩容sd卡
+### 扩容sd卡
 调整分区大小的shell脚本内置到debian系统中，位于/opt/scripts/tools路径下grow_partition.sh
 进入tools路径后，可用ls -l命令查看
 增加权限 
