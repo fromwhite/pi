@@ -136,6 +136,52 @@ rfkill block bluetooth
 #rm -rf /var/www
 #rm -rf /etc/libapache2-mod-jk
 ```
+### 设置samba
+```
+首选安装
+apt-get install Samba
+//如果有依赖警告，先更新再安装
+创建共享目录 /thr
+mkdir /thr
+chmod 777 thr //权限自己看需求
+adduser thr //增加共享用户
+touch /etc/samba/smbpasswd //创建Samba账户
+smbpasswd -a thr //添加分享账户
+vim /etc/Samba/smb.conf
+在smb.conf最后添加上,
+[share]
+　　path = /thr //需要共享的本地路径，必须使用绝对路径
+　　available = yes
+　　browsealbe = yes
+　　valid users = thr //在这里添加前面创建的一个用户叫coin
+　　public = yes
+　　writable = yes
+  
+完成退出，/etc/init.d/samba restart
+设置开机启动，在/etc/init.d/新建脚本 start_smb
+#！/bin/bash
+### BEGIN INIT INFO
+# Provides:          start_samba
+# Required-Start:    $all
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Run /etc/init.d/start_samba if it exist
+### END INIT INFO
+sudo  /etc/init.d/samba start
+
+完成退出，编辑/etc/sudoers，给予无密码权限，在最后一行添加
+user debian=NOPASSWD:/etc/init.d/samba
+完成退出，
+chmod +x /etc/init.d/start_smb.sh   //加可执行权限
+设置开机启动
+sudo update-rc.d start_smb.sh defaults 99
+取消
+sudo update-rc.d -f start_smb remove
+
+reboot
+```
+
 
 todo:为wifidog增加安全验证，防止好奇宝宝挟持流量
 
