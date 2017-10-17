@@ -27,6 +27,8 @@ sudo reboot
 ```
 
 ### wifi设置
+bbb seeed版默认开机时如果存在wifi配置直连，否则自建一个beaglebong-xx的ap，连接ap，web方式选择ssid设置wifi。但次ap没有密码，需要修改。
+也可以通过wpa_supplicant配置，修改/etc/network/interfaces，在wpa_supplicant.conf network里面保留一个低优先级ssid，自己开放一个ssid的ap，让板子连接上去，在进行wifi配置，相比玩软件还是web方式方便一点。
 
 方法一
 连接bbb，打开浏览器，输入http://192.168.8.1/login，可以在里面选择要连接的上级路由器并设置相应的密码
@@ -99,7 +101,7 @@ bash 2342 root 3r DIR 8,1 16384 1 /mnt/usb/
 从ti下载最新镜像 写入sd卡 reboot
 
 ### 扩容sd卡
-调整分区大小的shell脚本内置到debian系统中，位于/opt/scripts/tools路径下grow_partition.sh
+调整分区大小的shell脚本内置到debian系统中，cd /opt/scripts/tools,路径下grow_partition.sh
 进入tools路径后，可用ls -l命令查看
 增加权限 
 ```
@@ -119,6 +121,12 @@ df查看即可 3.3G恢复到了15G
 ```
 rfkill block bluetooth
 ```
+### 屏蔽登陆信息
+```
+#vi /etc/issue
+#vi /etc/issue.net
+```
+
 todo:为wifidog增加安全验证，防止好奇宝宝挟持流量
 
 to be continued
