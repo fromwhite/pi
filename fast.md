@@ -127,6 +127,16 @@ rfkill block bluetooth
 #vi /etc/issue.net
 ```
 
+### 移除apache2
+```
+#apt-get --purge remove apache2
+#apt-get --purge remove apache2-utils
+
+#rm -rf /etc/apache2
+#rm -rf /var/www
+#rm -rf /etc/libapache2-mod-jk
+```
+
 todo:为wifidog增加安全验证，防止好奇宝宝挟持流量
 
 to be continued
