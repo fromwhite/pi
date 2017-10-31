@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>WebSocket Echo fMp4</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body>
+    <video id='v' controls width="80%"></video>
+    <script>
+        //canvasfinger
+        window.getUUID = function(domain) {
+            function bin2hex(s){
+                var i, l, o = '',
+                    n;
+                s += '';
+                for (i = 0, l = s.length; i < l; i++) {
+                    n = s.charCodeAt(i)
+                        .toString(16);
+                    o += n.length < 2 ? '0' + n : n;
+                }
+                return o;
+            }
+
+            var canvas = document.createElement('canvas');
+            var ctx = canvas.getContext("2d");
+            ctx.font = "24px Arial";
+            ctx.fillText("Hello Panda",22,33);
+            ctx.moveTo(0,60);
+            ctx.lineTo(100,60);
+            ctx.stroke();
+            var b64 = canvas.toDataURL().replace("data:image/png;base64,","");
+            var bin = atob(b64);
+            var crc = bin2hex(bin.slice(-16, -12));
+
+            canvas = null;
+            return crc;
+        }
+    </script>
+    <script>
+        //media source extensions
+        // var UUID = window.getUUID();
+        // console.log(UUID);
+
+        var ws = new WebSocket("ws://localhost:8181");
+            ws.binaryType = 'arraybuffer';    
+
+        var mediaSource = new MediaSource();
+        var buffer;
+        var queue = [];
+
+        var video = document.querySelector('#v');
+        video.src = window.URL.createObjectURL(mediaSource);
+
+        mediaSource.addEventListener('sourceopen', function(e) {
+        
+        ws.onopen = function()
+        {
+            //ws.send(JSON.stringify({action:'NEW'}));
+            video.play();
+        };
+
+        buffer = mediaSource.addSourceBuffer('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+
+        buffer.addEventListener('update', function() { // Note: Have tried 'updateend'
+
+            if (queue.length > 0 && !buffer.updating) {
+            buffer.appendBuffer(queue.shift());
+            }
+ 
+            if( queue.length == 0 && !buffer.updating ) {
+                mediaSource.endOfStream();
+            }
+        });
+        }, false);
+
+        ws.addEventListener('message', function(e) {
+            console.log(e)
+        if (typeof e.data !== 'string') {
+            if (buffer.updating || queue.length > 0) {
+            queue.push(e.data);
+            } else {
+            buffer.appendBuffer(e.data);
+            }
+        }else{
+            //init
+            var action = '' + JSON.parse(e.data).action;
+            console.log(action);
+            if (action == 'connected' ){
+                ws.send(JSON.stringify({action:"REQUESTSTREAM"}))
+                console.log('res stream')
+            }
+            if(action=='end'){
+                //mediaSource.endOfStream();
+                console.log('end')
+            }
+        }
+        }, false);
+    </script>
+</body>
+</html>
