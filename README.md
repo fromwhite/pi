@@ -1,10 +1,9 @@
-### beaglebone black lab. 
+#### 在beaglebone block wireless上面运行一个完整debian8.0 做过的一些有趣玩法 
 
- * debian on soc
- * wifi wlan
- * usb-camera
+ * debian samba + vlc
+ * nodejs + websocket + mediasource
 
-### Future
-* nas
+#### Future
+* 微信web协议
 * opencv
 
