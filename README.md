@@ -5,5 +5,4 @@
 
 #### Future
 * 微信web协议
-* opencv
 
