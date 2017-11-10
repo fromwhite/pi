@@ -1,4 +1,8 @@
 {
+  "name": "showcase",
+  "version": "1.0.0",
+  "description": "weboscket mediasource",
+  "main": "main.js",
   "dependencies": {
     "node-uuid": "^1.4.8",
     "stream-split": "^1.1.0",
