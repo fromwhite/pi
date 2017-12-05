@@ -1,8 +1,0 @@
-运行环境
-1.nodejs环境,npm安装依赖package.json
-2.执行node main 或者package script
-
-目标概述
-nodejs读取fMP4文件视频流,websocket推流,前端拿到视频片段喂给video blob
-
-todo:优化大文件,使用pipe，buffer处理
