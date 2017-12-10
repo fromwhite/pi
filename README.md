@@ -4,5 +4,5 @@
  * websocket_mediasource，websocket推流，前端把MP4fragement喂给video blob
 
 #### Future
-* 微信web协议
+* 微信web协议(暂停)
 
