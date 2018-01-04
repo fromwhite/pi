@@ -153,7 +153,7 @@ vim /etc/Samba/smb.conf
 　　path = /thr //需要共享的本地路径，必须使用绝对路径
 　　available = yes
 　　browsealbe = yes
-　　valid users = thr //在这里添加前面创建的一个用户叫coin
+　　valid users = thr //在这里添加前面创建的一个用户叫 thr
 　　public = yes
 　　writable = yes
   
