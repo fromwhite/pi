@@ -144,16 +144,16 @@ apt-get install Samba
 创建共享目录 /pi
 mkdir /home/pi
 chmod 777 pi //权限自己看需求
-adduser share //增加共享用户
+adduser thr //增加共享用户
 touch /etc/samba/smbpasswd //创建Samba账户
-smbpasswd -a share //添加分享账户
+smbpasswd -a thr //添加分享账户
 vim /etc/samba/smb.conf
 在smb.conf最后添加上,
 [share]
 　　path = /home/pi //需要共享的本地路径，必须使用绝对路径
 　　available = yes
 　　browsealbe = yes
-　　valid users = share //在这里添加前面创建的一个用户叫 share
+　　valid users = thr //在这里添加前面创建的一个用户叫 thr
 　　public = yes
 　　writable = yes
   
