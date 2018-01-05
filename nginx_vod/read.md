@@ -1,4 +1,4 @@
-#### nginx_vod：nginx-rtmp模块推流，nginx代理一个web服务在浏览器呈现vod list，通过url schemes打开 使用vlc播放rtmp视频流
+#### nginx_vod：nginx-rtmp模块推流，nginx代理一个web服务 在浏览器呈现vod list，通过url schemes打开 使用vlc播放rtmp视频流
 ##### 前置依赖条件
 * nginx-1.9.9
 * nginx-rtmp-module 
