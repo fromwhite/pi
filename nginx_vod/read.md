@@ -37,5 +37,5 @@ sudo ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
 /* 执行 test 查看版本信息 */
 nginx -v
 ```
-* 开启一个点播服务 nginx conf在/usr/local/nginx/conf 将原conf备份conf.bak 替换新nginx.conf
+* 开启一个点播服务 nginx conf在/usr/local/nginx/conf 将原conf备份conf.bak 在nginx.conf最后加上rtmp规则 pi为我自己的关联目录 rtmp://192.168.1.100/vod/xx.mp4
 
