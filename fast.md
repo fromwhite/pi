@@ -1,5 +1,5 @@
 ## 快速上手
-目前主要玩的板子是BBGW,树莓派玩家注意,部分传感器和gpio硬件不同,纯软件部分标准兼容,所有目录都会单独描述版本和库依赖
+目前主要玩的板子是BeagleBone,树莓派玩家注意,部分传感器和gpio硬件不同,纯软件部分标准兼容,所有目录都会单独描述版本和库依赖
 BBGW debian jessie 默认账户debian temppwd
 ssh登陆之后 增加sudo passwd root密码 然后重置debian账户
 
@@ -13,11 +13,11 @@ sudo reboot
 ```
 
 ### wifi设置
-BBGW默认开启一个SoftAp  通过ifonfig可以看到4个不同的网络 SoftAp0 lo usb0 wlan0
+BB默认开启一个SoftAp  通过ifonfig可以看到4个不同的网络 SoftAp0 lo usb0 wlan0
 SoftAp0 ssid为beagleboneXXXX,通过这个ap连接，转发到固定192.168.8.1一个wificonfig页面,在此页面选择wifi,成功连接后会生成配置文件下次开机自连
 SoftAp0的配置文件在/etc/default/bb-wl18xx,修改TETHER_ENABLED=yes为TETHER_ENABLED=no,reboot后就会发现ap已关闭，这样就不怕好奇宝宝挟持流量了
-假如经常变动wifi环境,通过开关softap比较麻烦,那么BBGW还有一个ConnMan,这是一个非常小巧且可靠的工具,通过connmanctl添加网络连接成功后，会在/var/lib/connman生成配置文件,并且下次自动连接.
-我们可以添加一个默认wifi配置,当陌生环境时，通过这样一个默认热点给BBGW连接,在ssh修改wifi
+假如经常变动wifi环境,通过开关softap比较麻烦,那么还有一个ConnMan,这是一个非常小巧且可靠的工具,通过connmanctl添加网络连接成功后，会在/var/lib/connman生成配置文件,并且下次自动连接.
+我们可以添加一个默认wifi配置,当陌生环境时，通过这样一个默认热点给BB连接,在ssh修改wifi
 ```
 connmanctl
 > enable wifi # 启用无线网卡
