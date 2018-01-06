@@ -185,7 +185,7 @@ reboot
 /proc/N/status 进程状态信息，比stat/statm更具可读性   
 
 htop默认线程计算 f2选择display options 右侧选择hide userland threads过滤重复 f5树形展开
-
+grep -rl 'abc' / 在根目录(/)下递归(r)查找包含'abc'的文件 列出文件名(参数l)
 to be continued
 
 
