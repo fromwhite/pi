@@ -110,6 +110,7 @@ rfkill block bluetooth
 ```
 #vi /etc/issue
 #vi /etc/issue.net
+#rm -rf /etc/motd
 ```
 
 ### 移除apache2
