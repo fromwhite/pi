@@ -165,7 +165,7 @@ reboot
 ### 从进程查找启动脚本
 经常写的脚本忘了放在那里了
 1.通过ps -ef |grep xxxxx 或者htop得到该进程的pid   
-2.输入ls -l ,结果中 exe链接对应的就是可执行文件的路径   
+2.输入ls -l /proc/N ,结果中 exe链接对应的就是可执行文件的路径   
 /proc/N pid为N的进程信息   
 /proc/N/cmdline 进程启动命令   
 /proc/N/cwd 链接到进程当前工作目录   
@@ -177,7 +177,14 @@ reboot
 /proc/N/root 链接到进程的根目录   
 /proc/N/stat 进程的状态   
 /proc/N/statm 进程使用的内存的状态   
-/proc/N/status 进程状态信息，比stat/statm更具可读性   
+/proc/N/status 进程状态信息，比stat/statm更具可读性   
+
+htop默认线程计算 f2选择display options 右侧选择hide userland threads过滤重复 f5树形展开
+
+### 保留softap模块可以移除的部分功能
+/etc wifidog-msg wifidog
+/usr/bin/wifidog_server 
+/usr/bin/node-red 
 
 
 to be continued
