@@ -12,6 +12,11 @@ sudo apt-get upgrade
 sudo reboot
 ```
 
+更改时区
+```
+timedatectl set-timezone Asia/Shanghai
+```
+
 ### wifi设置
 BB默认开启一个SoftAp  通过ifonfig可以看到4个不同的网络 SoftAp0 lo usb0 wlan0
 SoftAp0 ssid为beagleboneXXXX,通过这个ap连接，转发到固定192.168.8.1一个wificonfig页面,在此页面选择wifi,成功连接后会生成配置文件下次开机自连
