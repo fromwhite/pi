@@ -19,7 +19,6 @@ timedatectl set-timezone Asia/Shanghai
 
 ### wifi设置
 BB默认开启一个SoftAp  通过ifonfig可以看到4个不同的网络 SoftAp0 lo usb0 wlan0
-SoftAp0的配置信息在/tmp/hostapd-wl18xx.conf
 SoftAp0 ssid为beagleboneXXXX,通过这个ap连接，转发到固定192.168.8.1一个wificonfig页面,在此页面选择wifi,成功连接后会生成配置文件下次开机自连
 SoftAp0的配置文件在/etc/default/bb-wl18xx,修改TETHER_ENABLED=yes为TETHER_ENABLED=no,reboot后就会发现ap已关闭，这样就不怕好奇宝宝挟持流量了
 假如经常变动wifi环境,通过开关softap比较麻烦,那么还有一个ConnMan,这是一个非常小巧且可靠的工具,通过connmanctl添加网络连接成功后，会在/var/lib/connman生成配置文件,并且下次自动连接.
