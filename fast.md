@@ -1,59 +1,37 @@
 ## 快速上手
+目前主要玩的板子是BBGW,树莓派玩家注意,部分传感器和gpio硬件不同,纯软件部分标准兼容,所有目录都会单独描述版本和库依赖
+BBGW debian jessie 默认账户debian temppwd
+ssh登陆之后 增加sudo passwd root密码 然后重置debian账户
 
-### 常用
+### 换源更新
 ```
-su切换用户
-exit从普通用户退出进入root
-adduser vinc添加用户
-who查看当前登陆用户
-passwd user更改密码
-换源前备份 /etc/apt/sources.list    cmd:cp sources.list ./sources.list.bak
-```
-
-### 查看本机信息
-```
+sed -i 's/httpredir.debian.org/mirrors4.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
 lsb_release -a
-cat /proc/version
-uname -a
-df -h
-netstat -lnp
-```
-
-### 更新 先换阿里源jessie
-```
 sudo apt-get update
 sudo apt-get upgrade
 sudo reboot
 ```
 
 ### wifi设置
-bbb seeed版默认开机时如果存在wifi配置直连，否则自建一个beaglebong-xx的ap，连接ap，web方式选择ssid设置wifi。但次ap没有密码，需要修改。
-也可以通过wpa_supplicant配置，修改/etc/network/interfaces，在wpa_supplicant.conf network里面保留一个低优先级ssid，自己开放一个ssid的ap，让板子连接上去，在进行wifi配置，相比玩软件还是web方式方便一点。
-
-方法一
-连接bbb，打开浏览器，输入http://192.168.8.1/login，可以在里面选择要连接的上级路由器并设置相应的密码
-ssh连接
-ifconfig命令看下网络配置
-SoftAP0, 一个usb0，一个wlan0，分别对应的IP为：192.168.8.1，192.168.7.2，192.168.2.104
-route命令来查看路由设置
-wlan0负责处理192.168.2.0/24及192.168.8.0/24的所有路由转发，
-而usb0则负责所有192.168.7.0/24的路由转发，
-SoftAP0为ap
-
-方法二
-ssh登陆 默认root无初始密码 登陆passwd修改
-sudo iwlist wlan0 scan 命令  可以显示周围所有的无线网络  ESSID即为无线网络名
-找到自己想连接的那个网络，在最下端输入sudo nano /etc/wpa_supplicant/wpa_supplicant.conf 命令，按回车键，即可进入nano 编辑器，打开wpa_supplicant配置文件
-在文件最底部添加
+BBGW默认开启一个SoftAp  通过ifonfig可以看到4个不同的网络 SoftAp0 lo usb0 wlan0
+SoftAp0 ssid为beagleboneXXXX,通过这个ap连接，转发到固定192.168.8.1一个wificonfig页面,在此页面选择wifi,成功连接后会生成配置文件下次开机自连
+SoftAp0的配置文件在/etc/default/bb-wl18xx,修改TETHER_ENABLED=yes为TETHER_ENABLED=no,reboot后就会发现ap已关闭，这样就不怕好奇宝宝挟持流量了
+假如经常变动wifi环境,通过开关softap比较麻烦,那么BBGW还有一个ConnMan,这是一个非常小巧且可靠的工具,通过connmanctl添加网络连接成功后，会在/var/lib/connman生成配置文件,并且下次自动连接.
+我们可以添加一个默认wifi配置,当陌生环境时，通过这样一个默认热点给BBGW连接,在ssh修改wifi
 ```
-network={
-ssid="网络名"
-psk="密码"
-}
+connmanctl
+> enable wifi # 启用无线网卡
+> scan wifi # 扫描无线网络
+> services # 列举扫描到的无线网络 connect后面的参数是wifi_开头的而不是你的无线网名称。managed代表AP模式 (非Ad-Hoc),psk为加密方式。开放网络是none，此时不需要agent on
+> services wifi_*_psk # [optional] 查看某个无线网络的具体信息
+> agent on # [ptional] 无密码的可以不需要这句
+> connect wifi_*_psk # 不是SSID，二是后面对应的wifi_*，根据自己情况修改此时会要求你输入网络密码
+> state # 成功连接状态为ready，已连上网是online
+> help # 显示帮助文件
+> quite # 退出
 ```
-添加完之后，按ctrl+x，再按y键 最后按回车，wifi网络即可添加完成
 
-###挂载u盘
+### 挂载u盘
 原理：
 在Linux中，插入U盘，系统识别后，则会自动在 /dev 目录增加一个设备文件，  名为 /dev/sda1 或 sda2 或 sdb1...
 然后，可以用mount命令把这个设备挂接到一个空的目录中。完成后，该目录即是这个U盘，按权限读写即可。
@@ -181,9 +159,6 @@ sudo update-rc.d -f start_smb remove
 
 reboot
 ```
-
-
-todo:为wifidog增加安全验证，防止好奇宝宝挟持流量
 
 to be continued
 
