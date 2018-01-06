@@ -186,12 +186,6 @@ reboot
 
 htop默认线程计算 f2选择display options 右侧选择hide userland threads过滤重复 f5树形展开
 
-### 保留softap模块可以移除的部分功能
-/etc wifidog-msg wifidog
-/usr/bin/wifidog_server 
-/usr/bin/node-red 
-
-
 to be continued
 
 
