@@ -64,22 +64,6 @@ sudo mount  /dev/sda4 /mnt/8g_flash
 sudo umount /mnt/8g_flash
 ```
 
-如果提示设备在忙
-umount: /mnt/usb: device is busy
-查找占用目录进程：
-```
-#lsof |grep /mnt/usb
-bash 1971 root cwd DIR 8,1 16384 1 /mnt/usb/
-bash 2342 root 3r DIR 8,1 16384 1 /mnt/usb/
-```
-结束进程，再卸载
-```
-#kill -9 1971
-#kill -9 2342
-```
-记得查看 fdisk -l  或者df -h   less -f查看文件
-
-
 ### 从sd卡开机
 默认优先引导sd卡的镜像 sd不存在或者没有可运行的系统时就引导板载emmc
 从ti下载最新镜像 写入sd卡 reboot
@@ -124,7 +108,7 @@ rfkill block bluetooth
 ### 设置samba
 ```
 首选安装
-apt-get install Samba
+apt-get install samba
 //如果有依赖警告，先更新再安装
 创建共享目录 /home/pi
 mkdir /home/pi
