@@ -24,7 +24,7 @@ cd /nginx-1.9.9/extra
 mkdir extra
 mv ../nginx-rtmp-module ./extra
 /* 编译 并安装 */
-./configure --with-http_ssl_module --with-ipv6 --with-sha1=/usr/include/openssl --with-md5=/usr/include/openssl --add-module=./extra/nginx-rtmp-module
+./configure --with-http_ssl_module --with-ipv6 --add-module=./extra/nginx-rtmp-module
 make -j4 && make install
 make clean
 /* 至此 没异常就完成 nginx依赖一些基础库，如果编译过程发现缺库，就升级 或者手动添加依赖库 */
