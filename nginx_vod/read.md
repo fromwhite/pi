@@ -24,17 +24,17 @@ cd /nginx-1.9.9/extra
 mkdir extra
 mv ../nginx-rtmp-module ./extra
 /* 编译 并安装 */
-./configure --with-http_ssl_module --add-module=./extra/nginx-rtmp-module
+./configure --with-http_ssl_module --with-ipv6 --with-sha1=/usr/include/openssl --with-md5=/usr/include/openssl --add-module=./extra/nginx-rtmp-module
 make -j4 && make install
 make clean
 /* 至此 没异常就完成 nginx依赖一些基础库，如果编译过程发现缺库，就升级 或者手动添加依赖库 */
 /* 默认编译nginx 没有手动指定 ./configure ----prefix=/usr/local/nginx 默认安装在/usr/local/nginx */
-/* 执行 test 测试默认安装 */
+/* 测试默认安装路径 */
 /usr/local/nginx
 /* 成功说明已安装 可能存在端口占用 libc异常等等 */
 /* 为了方便全局使用 做一个软连接 */
 sudo ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
-/* 执行 test 查看版本信息 */
+/* 查看版本信息 */
 nginx -v
 ```
 * 开启一个点播服务 nginx conf在/usr/local/nginx/conf 将原conf备份conf.bak 在nginx.conf最后加上rtmp规则 pi为我自己的关联目录 rtmp://192.168.1.100/vod/xx.mp4
