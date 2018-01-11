@@ -110,7 +110,7 @@ rfkill block bluetooth
 首选安装
 apt-get install samba
 //如果有依赖警告，先更新再安装
-创建共享目录 /home/pi
+创建共享目录 /xx
 mkdir /home/pi
 chmod 777 pi //权限自己看需求
 adduser pi //增加共享用户
@@ -118,8 +118,8 @@ touch /etc/samba/smbpasswd //创建samba账户
 smbpasswd -a pi //添加分享账户
 vim /etc/samba/smb.conf
 在smb.conf最后添加上,
-[share]
-　　path = /home/pi //需要共享的本地路径，必须使用绝对路径
+[pi] //share 共享两个目录 一个为path描述 一个为共享用户目录 此处改为pi path为共享用户pi目录.只要一个共享目录，省略创建新的共享分区
+　　path = /home/pi //需要共享的本地路径，必须使用绝对路径 第二个共享目录 /xx 忽略 只共享pi用户目录
 　　available = yes
 　　browsealbe = yes
 　　valid users = pi //在这里添加前面创建的一个用户叫 pi
