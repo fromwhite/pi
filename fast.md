@@ -5,6 +5,7 @@ ssh登陆之后 增加sudo passwd root密码 然后重置debian账户
 
 ### 更新
 ```
+sed -i 's/httpredir.debian.org/mirrors4.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
 sudo apt-get update
 sudo apt-get upgrade
 sudo reboot
