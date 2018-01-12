@@ -22,7 +22,6 @@ cd nginx-1.9.9
 ./configure
 make -j4 && make install
 /*新建/nginx-1.9.9/extra目录 并将nginx-rtmp-module移入 */
-cd /nginx-1.9.9/extra
 mkdir extra
 mv ../nginx-rtmp-module ./extra
 /* 编译 并安装 */
