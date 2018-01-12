@@ -16,8 +16,7 @@ tar -zxvf nginx-1.11.8.tar.gz
 unzip master.zip
 cd nginx-1.11.8
 ./configure --with-http_ssl_module --add-module=../nginx-rtmp-module-master
-make -j4
-sudo make install
+make -j4 && make install
 /* 为了方便全局使用 做一个软连接 */
 sudo ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
 /* 查看版本信息 */
