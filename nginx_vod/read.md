@@ -15,6 +15,8 @@ wget http://nginx.org/download/nginx-1.9.9.tar.gz
 tar -zxvf nginx-1.9.9.tar.gz
 /* 获取nginx-rtmp-module */
 git clone https://github.com/arut/nginx-rtmp-module.git
+/* 安装基础库 */
+sudo apt-get install build-essential libpcre3 libpcre3-dev openssl libssl-dev zlib1g-dev 
 /* 编译nginx 并安装 */
 cd nginx-1.9.9
 ./configure
