@@ -1,7 +1,6 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
-
 def	app(environ, start_response):
 	status = '200 OK'
 	response_body = """<!doctype html>
