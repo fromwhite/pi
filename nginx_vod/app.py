@@ -1,6 +1,7 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
+
 def	app(environ, start_response):
 	status = '200 OK'
 	response_body = """<!doctype html>
@@ -22,13 +23,13 @@ def	app(environ, start_response):
 </style>
 </head>
 <body>
-	<header>
-		<h2>vod list</h2>
-	</header>
-	<main>
-		<p>main zoom</p>
-		<section>more section</section>
-	</main>
+<header>
+	<h2>vod list</h2>
+</header>
+<main>
+	<p>main zoom</p>
+	<section>more section</section>
+</main>
 </body>
 </html>"""
 
