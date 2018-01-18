@@ -85,7 +85,7 @@ class WSGIServer(object):
             response += '\r\n'
             for data in app_data:
                 response += data
-            self.connection.sendall(response)
+            self.connection.sendall(response.encode("utf-8"))
         finally:
             self.connection.close()
 
