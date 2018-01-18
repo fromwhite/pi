@@ -36,4 +36,18 @@ def	app(environ, start_response):
 	response_headers = [('Content-Type', 'text/html'),('Content-Length', str(len(response_body)))]
 	start_response(status, response_headers)
 	
+		def scanpath(filepath, suffix):
+		filelist = []
+		# print("开始扫描[{0}]".format(filepath))
+		if not os.path.isdir(filepath):
+			# print("[{0}]不是目录".format(filepath))
+			exit(-1)
+		for filename in os.listdir(filepath):
+			if os.path.isdir(filepath + "/" + filename):
+				filelist.extend(scanpath(filepath + "/" + filename, suffix))
+			else:
+				if filename.endswith(suffix):
+					filelist.append((filepath, filename))
+		return filelist
+	
 	return [response_body]
