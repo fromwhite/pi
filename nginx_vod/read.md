@@ -35,7 +35,13 @@ nginx -v
 使某服务自动启动 systemctl enable xx.service
 ```
 
-##### 开启一个点播服务 nginx conf在/usr/local/nginx/conf 将原conf备份conf.bak 在nginx.conf最后加上rtmp规则 pi为我自己的关联目录 rtmp://192.168.1.100/vod/xx.mp4
+##### 开启一个点播服务    
+```
+nginx conf在/usr/local/nginx/conf 
+将原conf备份conf.bak 
+在nginx.conf最后 加上rtmp规则(本文档内nginx.conf) pi为我自己的关联目录 
+完整地址 rtmp://192.168.1.100/vod/xx.mp4
+```
 
 ##### vod list服务与模块启动方式
 ```
