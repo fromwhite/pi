@@ -2,4 +2,4 @@
 
  * debian samba + vlc，为文件系统基础，建立一个共享文件区
  * websocket_mediasource，websocket推流，前端把MP4fragement喂给video blob
- * nginx_vod，使用nginx-rtmp模块推流，nginx代理一个web服务向前端呈现vod list，前端通过url schemes打开vlc播放rtmp视频流
+ * nginx_vod，使用nginx-rtmp模块推流，nginx代理一个web服务向前端呈现vod list，前端url schemes打开vlc播放rtmp视频流
