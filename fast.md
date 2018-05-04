@@ -155,6 +155,7 @@ reboot
 经常写的脚本忘了放在那里了
 1.通过ps -ef |grep xxxxx 或者htop得到该进程的pid   
 2.输入ls -l /proc/N ,结果中 exe链接对应的就是可执行文件的路径   
+```
 /proc/N pid为N的进程信息   
 /proc/N/cmdline 进程启动命令   
 /proc/N/cwd 链接到进程当前工作目录   
@@ -170,6 +171,36 @@ reboot
 
 htop默认线程计算 f2选择display options 右侧选择hide userland threads过滤重复 f5树形展开
 grep -rl 'abc' / 在根目录(/)下递归(r)查找包含'abc'的文件 列出文件名(参数l)
+```
+### 备份系统（文件备份）
+```
+// 备份前先切换到root用户，避免权限问题，然后切换到/（根目录）
+sudo su
+cd /
+tar -cvpzf /backup.tgz --exclude=/proc --exclude=/lost+found --exclude=/backup.tgz --exclude=/mnt --exclude=/var/cache/apt/archives --exclude=/media --exclude=/cdrom --exclude=/tmp --exclude=/sys /
+// tar -cvpzf /pi_backup@`date +%Y-%m+%d`.tar.gz --exclude=/proc --exclude=/sys --exclude=/tmp --exclude=/boot --exclude=/home --exclude=/lost+found --exclude=/media --exclude=/mnt --exclude=/run /
+
+参数：
+-c： 新建一个备份文档 
+-v： 显示详细信息 
+-p： 保存权限，并应用到所有文件 
+-z： 用gzip压缩备份文档，减小空间 
+-f： 指定备份文件的路径 
+–exclude： 排除指定目录，不进行备份
+
+/proc：一个虚拟文件系统，系统运行的每一个进程都会自动在这个目录下面创建一个进程目录。既然是系统自动创建，也就没必要备份的必要了。 
+/tmp：一个临时文件夹，系统的一些临时文件会放在这里。 
+/lost+found：系统发生错误时（比如非法关机），可以在这里找回一些丢失文件。 
+/media：多媒体挂载点，像u盘、移动硬盘、windons分区等都会自动挂载到这个目录下。 
+/mnt：临时挂载点，你可以自己挂载一些文件系统到这里。 
+/run：系统从启动以来产生的一些信息文件。 
+/home：用户目录，存放用户个人文件和应用程序。 
+/boot：和系统启动相关的文件，像grub相关文件都放在这里，这个目录很重要！
+
+// 系统还原 操作前切换到root，并且换到/根目录
+tar -xvpzf /pi_backup@2018-5-4.tar.gz -C /
+```
+
 to be continued
 
 
