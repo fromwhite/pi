@@ -177,9 +177,7 @@ grep -rl 'abc' / 在根目录(/)下递归(r)查找包含'abc'的文件 列出文
 // 备份前先切换到root用户，避免权限问题，然后切换到/（根目录）
 sudo su
 cd /
-tar -cvpzf /backup.tgz --exclude=/proc --exclude=/lost+found --exclude=/backup.tgz --exclude=/mnt --exclude=/var/cache/apt/archives --exclude=/media --exclude=/cdrom --exclude=/tmp --exclude=/sys /
-// tar -cvpzf /pi_backup@`date +%Y-%m+%d`.tar.gz --exclude=/proc --exclude=/sys --exclude=/tmp --exclude=/boot --exclude=/home --exclude=/lost+found --exclude=/media --exclude=/mnt --exclude=/run /
-
+tar -cvpzf /pi_backup@`date +%Y-%m+%d`.tar.gz --exclude=/proc --exclude=/sys --exclude=/tmp --exclude=/var/cache/apt/archives --exclude=/boot --exclude=/home --exclude=/lost+found --exclude=/media --exclude=/mnt --exclude=/run /
 参数：
 -c： 新建一个备份文档 
 -v： 显示详细信息 
@@ -187,7 +185,7 @@ tar -cvpzf /backup.tgz --exclude=/proc --exclude=/lost+found --exclude=/backup.t
 -z： 用gzip压缩备份文档，减小空间 
 -f： 指定备份文件的路径 
 –exclude： 排除指定目录，不进行备份
-
+目录说明：
 /proc：一个虚拟文件系统，系统运行的每一个进程都会自动在这个目录下面创建一个进程目录。既然是系统自动创建，也就没必要备份的必要了。 
 /tmp：一个临时文件夹，系统的一些临时文件会放在这里。 
 /lost+found：系统发生错误时（比如非法关机），可以在这里找回一些丢失文件。 
