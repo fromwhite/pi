@@ -127,29 +127,14 @@ vim /etc/samba/smb.conf
 　　writable = yes
   
 完成退出，/etc/init.d/samba restart
-设置开机启动，在/etc/init.d/新建脚本 start_smb
-#！/bin/bash
-### BEGIN INIT INFO
-# Provides:          start_samba
-# Required-Start:    $all
-# Required-Stop:
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: Run /etc/init.d/start_samba if it exist
-### END INIT INFO
-sudo  /etc/init.d/samba start
-
-完成退出，编辑/etc/sudoers，给予无密码权限，在最后一行添加
-user debian=NOPASSWD:/etc/init.d/samba
-完成退出，
-chmod +x /etc/init.d/start_smb.sh   //加可执行权限
-设置开机启动
-sudo update-rc.d start_smb.sh defaults 99
-取消
-sudo update-rc.d -f start_smb remove
-
-reboot
 ```
+
+### 修改hostname
+```
+sudo nano /etc/hostname
+// sudo nano /etc/hosts
+```
+
 
 ### 从进程查找启动脚本
 经常写的脚本忘了放在那里了
