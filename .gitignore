@@ -1,0 +1,11 @@
+/.config
+.bash_history
+.bash_logout
+.bashrc
+.profile
+
+wiki
+/hd
+/tag
+
+/ayaya/node_modules/*
