@@ -1,0 +1,92 @@
+<% include _header.ejs %>
+
+
+    <section class="main login-cell">
+        <div class="wrapper">
+            <form class="login-form" action="/login" method="POST">
+                <h1>
+                    <%= title %>
+                </h1>
+                <div class="item">
+                    <label for="UserName">登录名：</label>
+                    <input type="text" class="login-int" id="UserName" name="UserName" placeholder='输入用户名' maxlength="20" tabindex='1' />
+                </div>
+                <div class="item">
+                    <label for="UserPwd">密码：</label>
+                    <input type="password" class="login-int" id="UserPwd" name="UserPwd" placeholder='输入密码' maxlength="12" tabindex='2' />
+                </div>
+                <div class="item">
+                    <label class="login-form-cell">&nbsp;</label>
+                    <input type="button" id="login_btn_submit" class="login-btn" name="login" value="登录" tabindex='3' />
+                    <label class="login-form-cell login-form-cell1">&nbsp;</label>
+                    <input type="button" id="login_btn_reg" class="login-btn hidden" value="注册" tabindex='3' />
+                </div>
+            </form>
+            <script src="http://libs.cdnjs.net/blueimp-md5/1.0.1/js/md5.min.js"></script>
+            <script>
+                document.addEventListener("DOMContentLoaded", main, false);
+
+                function main() {
+                    document.getElementById('login_btn_reg').addEventListener('click', function () {
+                        location.href = '/reg';
+                    });
+                    // enter
+                    document.onkeydown = function (e) {
+                        var e = e || window.event;
+                        if (e.keyCode == 13) {
+                            if (document.getElementById('UserPwd').value && document.getElementById('UserPwd').value) {
+                                login();
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+                    // submit
+                    document.getElementById('login_btn_submit').addEventListener('click', function () {
+
+                        if (document.getElementById('UserName').value && document.getElementById('UserPwd').value) {
+                            login();
+                        } else {
+                            return false;
+                        }
+                    })
+                    // login
+                    function login() {
+
+                        _.push('/login', "username=" + document.getElementById('UserName').value + "&userpass=" +
+                            md5(document.getElementById('UserPwd').value),
+                            function (res) {
+                                var res = JSON.parse(res);
+
+                                if (res != null && res.code) {
+                                    var retVal = parseInt(res.code);
+
+                                    switch (retVal) {
+                                        case 2:
+                                            alert('输入有误');
+                                            break;
+                                        case 0:
+                                            alert('登录失败');
+                                            break;
+                                        case 1:
+                                            //alert('登录成功!');
+                                            location.href = '/'
+                                            break;
+                                        case 11:
+                                            alert('用户名或者密码错误');
+                                            break;
+                                        case 12:
+                                            alert('用户不存在');
+                                            break;
+                                    }
+                                } else {
+                                    alert('操作失败');
+                                }
+                            })
+                    }
+                }
+            </script>
+        </div>
+    </section>
+
+    <% include _footer.ejs %>

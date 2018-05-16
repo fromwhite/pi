@@ -1,0 +1,137 @@
+<% include _header.ejs %>
+
+
+    <section class="main login-cell">
+        <div class="wrapper">
+            <form class="login-form">
+                <h1>
+                    <%= title %>
+                </h1>
+                <p>
+                    登录名规则：
+                    <em>4位+</em>
+                    </br>密码规则：
+                    <em>最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符!@#$%^&*?</em>
+                    </br>
+                    安全码意义：
+                    <em>安全码是账户操作（修改用户密码，冻结用户）的必备条件，小于12个字符，安全码设定后本身不可更改</em>
+                </p>
+                <div class="item">
+                    <label for="UserName">登录名 ：
+                    </label>
+                    <input type="text" class="login-int" id="UserName" name="UserName" placeholder='输入用户名' maxlength="20" tabindex='1' />
+                </div>
+                <div class="item">
+                    <label for="UserPwd1">密码 ：
+                    </label>
+                    <input type="password" class="login-int" id="UserPwd1" name="UserPwd1" placeholder='输入密码' maxlength="12" tabindex='2' />
+                </div>
+                <div class="item">
+                    <label for="UserPwd2">再次密码：</label>
+                    <input type="password" class="login-int" id="UserPwd2" name="UserPwd2" placeholder='输入密码' maxlength="12" tabindex='2' />
+                </div>
+                <div class="item">
+                    <label for="UseX">安全码：</label>
+                    <input type="text" class="login-int" id="UserX" name="UseX" placeholder='输入安全码' maxlength="12" tabindex='3' />
+                </div>
+                <div class="item">
+                    <label class="login-form-cell">&nbsp;</label>
+                    <input type="button" class="login-btn" id="login_btn_submit" value="注册" tabindex='4' />
+                    <label class="login-form-cell login-form-cell1">&nbsp;</label>
+                    <input type="button" class="login-btn" id="login_btn_login" value="登录" tabindex='5' />
+                </div>
+            </form>
+            <script src="http://libs.cdnjs.net/blueimp-md5/1.0.1/js/md5.min.js"></script>
+            <script>
+                document.addEventListener("DOMContentLoaded", main, false);
+
+                function main() {
+                    var regPwd = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/;
+                    document.getElementById('login_btn_login').addEventListener('click', function () {
+                        location.href = '/login';
+                    });
+                    // enter
+                    document.onkeydown = function (e) {
+                        var e = e || window.event;
+                        if (e.keyCode == 13) {
+                            if (document.getElementById('UserName').value && document.getElementById('UserPwd1').value &&
+                                document.getElementById('UserPwd2').value) {
+                                if (document.getElementById('UserName').value.length > 3) {
+                                    if (document.getElementById('UserPwd1').value ==
+                                        document.getElementById('UserPwd2').value) {
+                                        if (regPwd.test(document.getElementById('UserPwd2').value)) {
+                                            Reg()
+                                        } else {
+                                            alert('密码规则 最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符')
+                                        }
+                                    } else {
+                                        alert('密码两次输入不一致')
+                                    }
+                                } else {
+                                    alert('用户名规则 4位+ ')
+                                }
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+                    // submit
+                    document.getElementById('login_btn_submit').addEventListener('click', function () {
+
+                        if (document.getElementById('UserName').value && document.getElementById('UserPwd1').value &&
+                            document.getElementById('UserPwd2').value) {
+                            if (document.getElementById('UserName').value.length > 3) {
+                                if (document.getElementById('UserPwd1').value ==
+                                    document.getElementById('UserPwd2').value) {
+                                    if (regPwd.test(document.getElementById('UserPwd2').value)) {
+                                        Reg()
+                                    } else {
+                                        alert('密码规则 最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符')
+                                    }
+
+                                } else {
+                                    alert('密码两次输入不一致')
+                                }
+                            } else {
+                                alert('用户名规则 4位+ ')
+                            }
+                        } else {
+                            return false;
+                        }
+                    })
+
+                    function Reg() {
+                        _.push('/reg', "username=" + document.getElementById('UserName').value + "&userpass=" +
+                            md5(document.getElementById('UserPwd2').value),
+                            function (res) {
+                                var res = JSON.parse(res);
+                                if (res != null && res.code) {
+
+                                    var retVal = parseInt(res.code);
+
+                                    switch (retVal) {
+                                        case 2:
+                                            alert('输入有误');
+                                            break;
+                                        case 0:
+                                            alert('注册失败');
+                                            break;
+                                        case 1:
+                                            alert('注册成功!');
+                                            location.href = '/login'
+                                            break;
+                                        case 10:
+                                            alert('用户已注册');
+                                            break;
+                                    }
+                                } else {
+                                    alert('操作失败');
+                                }
+                            })
+                    }
+                }
+            </script>
+        </div>
+    </section>
+
+    <% include _footer.ejs %>

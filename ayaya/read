@@ -1,0 +1,95 @@
+* 一个基于 Koa2 构建的轻服务
+Nodejs stable
+koa2
+Sequelize
+
+* 功能分析: 登录／注册 发布／留言
+三张表: 用户表users，发布信息表posts，留言表comments
+users：Id，UserName，UserPass，Last
+posts：id，name，title，content，md，uid，moment，comments，pv，type
+comments：id，name，content，moment，postid
+
+id主键递增
+name: 用户名
+pass：密码
+title：文章标题
+content：文章内容和评论
+uid：发表文章的用户id
+moment：创建时间
+comments：文章评论数
+pv：文章浏览数
+postid：文章id
+type：类型
+
+apt install mariadb-server
+
+创建数据库 ayaya
+mysql -u root -p
+CREATE DATABASE IF NOT EXISTS ayaya CHARACTER SET UTF8;
+USE ayaya;
+SET FOREIGN_KEY_CHECKS=0;
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `UserName` varchar(64) NOT NULL COMMENT '用户名',
+  `UserPass` varchar(64) NOT NULL COMMENT '用户密码',
+  `Last` DATETIME NOT NULL COMMENT '上次登录时间',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表';
+
+create table if not exists `posts`(
+     id INT NOT NULL AUTO_INCREMENT,
+     name VARCHAR(100) NOT NULL,
+     title TEXT(0) NOT NULL,
+     content TEXT(0) NOT NULL,
+     uid VARCHAR(40) NOT NULL,
+     moment VARCHAR(100) NOT NULL,
+     comments VARCHAR(200) NOT NULL DEFAULT '0',
+     pv VARCHAR(40) NOT NULL DEFAULT '0',
+     type VARCHAR(100) NOT NULL,
+     PRIMARY KEY ( id )
+);
+
+create table if not exists `comments`(
+     id INT NOT NULL AUTO_INCREMENT,
+     name VARCHAR(100) NOT NULL,
+     content TEXT(0) NOT NULL,
+     moment VARCHAR(40) NOT NULL,
+     postid VARCHAR(40) NOT NULL,
+     PRIMARY KEY ( id )
+);
+
+* 路由规划
+主页:   /   /home
+登录:   /login
+注册:   /reg
+发帖:   /create
+贴子详情: /posts/:postid
+
+* 部署与维护
+本地开发环境 硬件树莓派，软件环境 debian9 + Nodejs stable + mysql
+远端 套路云 1c1g1m 50G COS，运行环境 debian9 + Nodejs stable + mysql
+本地开发 rsync 同步到远端 套路云 （push脚本，修改rsync ip）
+远端 开启pm2守护进程 代码更新自动reload 进程意外挂掉自动重启
+pm2 start main.js
+pm2 list
+pm2 stop all
+
+* todo
+1.套路云动静分离 （功能未完成，cos脚本已屏蔽）
+2.session处理 考虑远端机器单核，session直接写内存，严谨需要剥离介质 比如种cookie或redis
+3.模板 颗粒细化
+4.优化数据存取 比如流行的 Sequelize
+
+卸载mysql
+sudo apt-get --purge remove mariadb-server
+apt-get autoremove
+apt-get autoclean
+rm /etc/mysql/ -R
+rm /var/lib/mysql/ -R
+
+* 参考潮汐资源
+https://github.com/wclimb/Koa2-blog
+https://github.com/embbnux/kails
+https://www.cnblogs.com/zhongweiv/p/nodejs_koa2_webapp.html
