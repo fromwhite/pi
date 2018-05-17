@@ -185,7 +185,3 @@ tar -xvpzf /pi_backup@2018-5-4.tar.gz -C /
 ```
 
 to be continued
-
-
-
-
