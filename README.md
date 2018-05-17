@@ -6,6 +6,6 @@ platform: debian jessie
 expand: GPIO/UART0/UART1/I2C/SPI   
 requirements: c/c++/python/shell/nginx/nodejs    
 
-* ~/pi.基础文件系统，包含samba共享本地网络／vlc本地媒体资源
-* websocket_mediasource.websocket推流，前端把MP4fragement喂给video blob
-* nginx_vod.使用nginx-rtmp模块推流，nginx代理一个web服务向前端呈现vod list，前端url schemes打开vlc播放rtmp视频流
+* ~/pi 基础文件系统，包含samba/vlc共享本地
+* websocket_mediasource websocket推流，前端video blob
+* nginx_vod nginx-rtmp推流，nginx代理vod list页面，vlc schemes播放rtmp流
