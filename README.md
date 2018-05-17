@@ -1,4 +1,4 @@
-π - some interesting toys in the beaglebone ：）
+π - some interesting toys in the beaglebone:)
 ===
 
 hardware: beaglebone green wireless   
