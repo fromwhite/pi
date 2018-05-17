@@ -1,7 +1,77 @@
-<% include _header.ejs %>
+<!DOCTYPE html>
+<html>
 
-    <% include _lab.ejs %>
+<head>
+    <meta charset="utf-8">
+    <title>
+        <%= title %>
+    </title>
+    <meta name="description" content="ayayaxd" />
+    <meta name="Referrer" content="unsafe-url">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="dns-prefetch" href="//static">
+    <link rel="icon" href="/images/favico.ico" type="image/icon" />
+    <link rel="stylesheet" href="/stylesheets/main.css" type="text/css">
+    <script src="/javascripts/main.js"></script>
+</head>
 
-        <% include _arcitle.ejs %>
+<body>
 
-            <% include _footer.ejs %>
+    <header>
+        <hgroup>
+            <a href="https://github.com/vvinc">GitHub</a>
+        </hgroup>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/" class="<%= title == '首页' ? 'on' : '' %>">全部文章</a>
+                </li>
+                <li>
+                    <a href="/lab" class="<%= title == 'h5test' ? 'on' : '' %>">h5test</a>
+                </li>
+                <li class="hid">
+                    <a href="/top" class="<%= title == 'Top' ? 'on' : '' %>">榜单</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="main content">
+        <div class="wrapper clearfix">
+
+            <article>
+                <div class="article-title">
+                    <a href="return false;">文章标题 test</a>
+                </div>
+                <div class="article-info">
+                    <span class="article-item">
+                        <em>作者</em>
+                    </span>
+                    <span class="article-item">
+                        <span class="index">view:</span>
+                        <span class="value">3909</span>
+                    </span>
+                    <span class="article-item">
+                        <span class="index">comment:</span>
+                        <span class="value">399</span>
+                    </span>
+                    <span class="article-item">
+                        <span class="value">2个月以前</span>
+                    </span>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <footer class="main">
+        <div class="wrapper">
+            &copy;21ms
+        </div>
+    </footer>
+
+</body>
+
+</html>

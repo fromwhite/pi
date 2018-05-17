@@ -1,27 +1,21 @@
 {
   "name": "ayaya",
   "version": "1.0.0",
-  "description": "",
+  "description": "Nosql",
   "main": "main.js",
   "dependencies": {
     "ejs": "^2.5.8",
     "koa": "^2.5.0",
     "koa-router": "^7.4.0",
-    "koa-static": "^4.0.2",
-    "mysql": "^2.15.0"
+    "koa-static": "^4.0.2"
   },
   "devDependencies": {
     "koa-bodyparser": "^4.2.0",
-    "koa-convert": "^1.2.0",
-    "koa-json": "^2.0.2",
-    "koa-session": "^5.8.1",
     "koa-views": "^6.1.4",
     "moment": "^2.22.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "export NODE_ENV=development  && node main",
-    "prd": "export NODE_ENV=production && node main",
     "pm2": "pm2 start processes.json"
   },
   "author": "",
