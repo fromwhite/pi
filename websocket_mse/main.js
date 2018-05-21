@@ -24,7 +24,6 @@ const
 
 const port = parseInt(process.argv[2] || 80, 10);
 
-// 文件服务器
 class Server {
         constructor(port) {
                 this.port = port || 8888;
