@@ -1,7 +1,7 @@
 {
   "name": "ayaya",
   "version": "1.0.0",
-  "description": "Nosql",
+  "description": "",
   "main": "main.js",
   "dependencies": {
     "ejs": "^2.5.8",
@@ -9,7 +9,8 @@
     "koa-json": "^2.0.2",
     "koa-router": "^7.4.0",
     "koa-session": "^5.8.1",
-    "koa-static": "^4.0.2"
+    "koa-static": "^4.0.2",
+    "pm2": "^2.10.4"
   },
   "devDependencies": {
     "koa-bodyparser": "^4.2.0",

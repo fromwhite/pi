@@ -14,7 +14,8 @@ router.get('/', face.index)
     .post('/login', face.loginEvt)
     .get('*', async (ctx, next) => {
         ctx.status = 404
-        await ctx.render('404');
+        ctx.body = '404'
+        //await ctx.render('404');
     });
 
 // async function logger(ctx, next) {

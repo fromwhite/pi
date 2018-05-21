@@ -40,6 +40,12 @@ async function lab(ctx, next) {
     })
 }
 async function login(ctx, next) {
+
+    //判断登录 未登录选择路由 已登陆重定向首页
+    if (!!ctx.session && ctx.session.id) {
+        await ctx.redirect('/');
+    }
+
     const title = '首页'
     const id = 1;
     const result = 1;
@@ -50,6 +56,7 @@ async function login(ctx, next) {
     })
 }
 async function loginEvt(ctx, next) {
+
     let form = ctx.request.body
 
     const args = {
