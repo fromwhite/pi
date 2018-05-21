@@ -22,12 +22,15 @@ const app = new Koa();
 app.keys = ['Ayaya'];
 
 async function logger(ctx, next) {
-    const startDate = new Date();
-    console.log(`method: ${ctx.method} code: ${ctx.status} time:${new Date() - startDate}ms`);
+    // console.log('request url:', ctx.url);
+    const start = new Date();
+    await next()
+    console.log(`method: ${ctx.method} code: ${ctx.status} time:${new Date - start}ms`);
+    // console.log(ctx.ms, 12)
 }
-app.use(logger);
-console.log(111)
-//app.use(face.file);
+
+// app.use(logger);
+// app.use(face.file);
 
 // 单核套路云 直接写内存
 let store = {

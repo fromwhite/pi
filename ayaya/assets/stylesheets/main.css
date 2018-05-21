@@ -70,7 +70,7 @@ td {
 }
 
 :root {
-    font: 12px -apple-system, BlinkMacSystemFont, 'Noto Sans', 'sans-serif', "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font: 14px -apple-system, BlinkMacSystemFont, 'Noto Sans', 'sans-serif', "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     touch-action: none;
 }
 
@@ -81,7 +81,7 @@ td {
 
 body {
     word-wrap: break-word;
-    line-height: 1.62;
+    /* line-height: 1.62; */
     -webkit-overflow-scrolling: touch;
     font-size: 14px;
     color: #555;
@@ -162,7 +162,6 @@ header hgroup {
 }
 
 header hgroup a {
-    font-size: 1.4em;
     color: #a9a9a9;
     display: block;
 }
@@ -191,17 +190,12 @@ header nav {
     top: 1em;
 }
 
-header nav ul li {
-    display: inline-block;
-    zoom: 1;
-    line-height: 1.4;
-    vertical-align: baseline;
-    margin: .3em;
+header nav span {
+    margin: .5em;
 }
 
-header nav ul li a {
+header nav span a {
     color: #a9a9a9;
-    display: block;
 }
 
 /*** main ***/
@@ -225,4 +219,34 @@ footer {
 
 footer .wrapper {
     font-size: .9em;
+}
+
+.main.content article {
+    margin: 2em 0;
+}
+
+.main.content article .title {}
+
+ul.listing {
+    margin-top: 1em;
+}
+
+ul.listing li {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul.listing li.listing-seperator:before {
+    content: "⭠ ";
+    color: #ccc;
+}
+
+ul.listing li.listing-item time {
+    color: #999;
+}
+
+ul.listing li.listing-item a,
+ul.listing li.listing-item header #header h1 a,
+header #header h1 ul.listing li.listing-item a {
+    padding: .2em 0 .2em 2em
 }
