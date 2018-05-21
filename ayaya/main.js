@@ -18,15 +18,16 @@ router.get('/', face.index)
         //await ctx.render('404');
     });
 
-// async function logger(ctx, next) {
-//     const startDate = new Date();
-//     next();
-//     console.log(`method: ${ctx.method} code: ${ctx.status} time:${new Date() -startDate}ms`);
-// }
-//app.use(logger);
-
 const app = new Koa();
 app.keys = ['Ayaya'];
+
+async function logger(ctx, next) {
+    const startDate = new Date();
+    console.log(`method: ${ctx.method} code: ${ctx.status} time:${new Date() - startDate}ms`);
+}
+app.use(logger);
+console.log(111)
+//app.use(face.file);
 
 // 单核套路云 直接写内存
 let store = {

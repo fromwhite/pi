@@ -1,3 +1,6 @@
+const fs = require("fs"),
+    path = require("path");
+
 // 常量配置
 let key = {
     Id: '01',
@@ -14,7 +17,6 @@ const retCode = {
     UsernameOrPasswordError: 11, //用户名或者密码错误      
     UserNotExist: 12, //用户不存在    
 };
-
 
 // 路由
 async function index(ctx, next) {
@@ -95,7 +97,20 @@ async function loginEvt(ctx, next) {
 //     await Router[url][method](ctx, next)
 //}
 
-
+// POST:markdown目录 文件改动重写cache
+let cache = {}
+// 按时间排序 读取文件到目录
+async function file(ctx, next) {
+    const base = './post/';
+    const files = fs.readdirSync(base);
+    files.sort(function (a, b) {
+        let astat = fs.lstatSync(base + a);
+        let bstat = fs.lstatSync(base + b);
+        return bstat.mtime - astat.mtime;
+    });
+    next()
+    console.log(files, 1)
+}
 // 逻辑开关 todo
 
 
@@ -104,5 +119,6 @@ module.exports = {
     index,
     lab,
     login,
-    loginEvt
+    loginEvt,
+    file
 }
