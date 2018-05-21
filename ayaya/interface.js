@@ -1,3 +1,4 @@
+// 常量配置
 let key = {
     Id: '01',
     name: 'root',
@@ -15,8 +16,9 @@ const retCode = {
 };
 
 
-let index = async (ctx, next) => {
-    //console.log(ctx, ctx.request.method, 11)
+// 路由
+async function index(ctx, next) {
+    //   console.log(ctx, ctx.request.method, 'index.get')
     const title = '首页'
     const id = 1;
     const result = 1;
@@ -26,32 +28,28 @@ let index = async (ctx, next) => {
         result
     })
 }
-
-let lab = async (ctx, next) => {
-
+async function lab(ctx, next) {
     // 测试页面 lab路由重定向sprite
     const title = 'h5test'
     const id = 1;
     const papa = 1;
-    await ctx.render('sprite', {
+    await ctx.render('lab', {
         title,
         id,
         papa
     })
 }
-
-// let login = async (ctx, netx) => {
-//     const title = '首页'
-//     const id = 1;
-//     const result = 1;
-//     await ctx.render('login', {
-//         title,
-//         id,
-//         result
-//     })
-// }
-
-let login = async (ctx, next) => {
+async function login(ctx, next) {
+    const title = '首页'
+    const id = 1;
+    const result = 1;
+    await ctx.render('login', {
+        title,
+        id,
+        result
+    })
+}
+async function loginEvt(ctx, next) {
     let form = ctx.request.body
 
     const args = {
@@ -72,8 +70,6 @@ let login = async (ctx, next) => {
     if (key.name != args.name || key.passwd != args.passwd) {
         result.code = retCode.UsernameOrPasswordError
     }
-
-    //console.log(ctx.session, 1)
     // 存入Session中
     ctx.session = {
         id: key.Id,
@@ -81,12 +77,25 @@ let login = async (ctx, next) => {
     }
 
     next();
-
     ctx.body = result;
 }
+
+// 路由表映射
+// async function action(ctx, next) {
+//     let method = ctx.request.method;
+//     //let url = ctx.request.url.replace(/\//, '') || '/';
+//     let url = ctx.request.url.replace(/^[1-9]\d*$/,'')
+//     await Router[url][method](ctx, next)
+//}
+
+
+// 逻辑开关 todo
+
+
 
 module.exports = {
     index,
     lab,
-    login
+    login,
+    loginEvt
 }

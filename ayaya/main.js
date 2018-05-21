@@ -4,33 +4,24 @@ const json = require('koa-json');
 const bodyParser = require('koa-bodyparser');
 const session = require('koa-session');
 
-const action = require('./interface');
+const face = require('./interface');
 
 const Router = require('koa-router');
 const router = Router();
-router.get('/', action.index)
-    .get('/lab', action.lab)
-    .get('/login', async (ctx, next) => {
-        const title = '首页'
-        const id = 1;
-        const result = 1;
-        await ctx.render('login', {
-            title,
-            id,
-            result
-        })
-    })
-    .post('/login', action.login)
+router.get('/', face.index)
+    .get('/lab', face.lab)
+    .get('/login', face.login)
+    .post('/login', face.loginEvt)
     .get('*', async (ctx, next) => {
         ctx.status = 404
         await ctx.render('404');
     });
 
-async function logger(ctx, next) {
-    const startDate = new Date();
-    next();
-    console.log(`method: ${ctx.method} code: ${ctx.status} time:${new Date() -startDate}ms`);
-}
+// async function logger(ctx, next) {
+//     const startDate = new Date();
+//     next();
+//     console.log(`method: ${ctx.method} code: ${ctx.status} time:${new Date() -startDate}ms`);
+// }
 //app.use(logger);
 
 const app = new Koa();
