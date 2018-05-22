@@ -91,7 +91,7 @@ class WSGIServer(object):
 
 
 if __name__ == '__main__':
-    port = 8888
+    port = 80
     if len(sys.argv) < 2:
         sys.exit('请提供可用的wsgi应用程序, 格式为: 模块名.应用名')
     elif len(sys.argv) > 2:
@@ -105,11 +105,11 @@ if __name__ == '__main__':
 
 
     app_path = sys.argv[1]
-    module, application = app_path.split('.')
+    module, application = app_path.split(':')
     module = __import__(module)
     application = getattr(module, application)
     httpd = generate_server(('', int(port)), application)
     print 'WSGI Server Serving HTTP service on port {0}'.format(port)
     print '{0}'.format(datetime.datetime.now().
-                       strftime('%a, %d %b %Y %H:%M:%S GMT'))
+        strftime('%a, %d %b %Y %H:%M:%S GMT'))
     httpd.serve_forever()
