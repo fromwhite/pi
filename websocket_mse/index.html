@@ -41,62 +41,61 @@
     </script>
     <script>
         // var UUID = window.getUUID();
+        document.addEventListener("DOMContentLoaded", main, false);
 
-        var ws = new WebSocket("ws://192.168.1.113:1999");
-        ws.binaryType = 'arraybuffer';
+        function main() {
+            var ws = new WebSocket("ws://" + document.domain + ":1999");
+            ws.binaryType = 'arraybuffer';
 
-        var mediaSource = new MediaSource();
-        var buffer;
-        var queue = [];
+            var mediaSource = new MediaSource();
+            var buffer;
+            var queue = [];
+            var mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
 
-        var video = document.querySelector('#v');
-        video.src = window.URL.createObjectURL(mediaSource);
+            var video = document.querySelector('#v');
 
-        mediaSource.addEventListener('sourceopen', function (e) {
+            if ('MediaSource' in window && MediaSource.isTypeSupported(mimeCodec)) {
+                video.src = window.URL.createObjectURL(mediaSource);
+                //console.log(mediaSource.readyState); // closed
+                mediaSource.addEventListener('sourceopen', function (e) {
 
-            ws.onopen = function () {
-                //ws.send(JSON.stringify({action:'NEW'}));
-                video.play();
-            };
+                    buffer = mediaSource.addSourceBuffer(mimeCodec);
 
-            buffer = mediaSource.addSourceBuffer('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+                    buffer.addEventListener('update', function () {
+                        if (queue.length > 0 && !buffer.updating) {
+                            buffer.appendBuffer(queue.shift());
+                        }
+                        if (queue.length == 0 && !buffer.updating) {
+                            mediaSource.endOfStream();
+                        }
+                    });
+                }, false);
 
-            buffer.addEventListener('update', function () { // Note: Have tried 'updateend'
-
-                if (queue.length > 0 && !buffer.updating) {
-                    buffer.appendBuffer(queue.shift());
-                }
-
-                if (queue.length == 0 && !buffer.updating) {
-                    mediaSource.endOfStream();
-                }
-            });
-        }, false);
-
-        ws.addEventListener('message', function (e) {
-            console.log(e)
-            if (typeof e.data !== 'string') {
-                if (buffer.updating || queue.length > 0) {
-                    queue.push(e.data);
-                } else {
-                    buffer.appendBuffer(e.data);
-                }
+                ws.addEventListener('message', function (e) {
+                    //console.log(e, buffer.buffered) // string:action json&data
+                    if (typeof e.data !== 'string') {
+                        if (buffer.updating || queue.length > 0) {
+                            queue.push(e.data);
+                        } else {
+                            buffer.appendBuffer(e.data);
+                        }
+                    } else {
+                        var action = '' + JSON.parse(e.data).action;
+                        //console.log(action);
+                        if (action == 'connected') {
+                            ws.send(JSON.stringify({
+                                action: "REQUESTSTREAM"
+                            }))
+                        }
+                        if (action == 'end') {
+                            mediaSource.endOfStream();
+                        }
+                    }
+                }, false);
             } else {
-                //init
-                var action = '' + JSON.parse(e.data).action;
-                console.log(action);
-                if (action == 'connected') {
-                    ws.send(JSON.stringify({
-                        action: "REQUESTSTREAM"
-                    }))
-                    console.log('res stream')
-                }
-                if (action == 'end') {
-                    //mediaSource.endOfStream();
-                    console.log('end')
-                }
+                console.error('Unsupported MIME type or codec: ', mimeCodec);
             }
-        }, false);
+        }
     </script>
 </body>
 
