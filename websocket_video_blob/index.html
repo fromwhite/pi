@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <video id='v' controls width="80%"></video>
+    <video id='v' autoplay controls width="80%"></video>
     <script>
         //canvasfinger
         window.getUUID = function (domain) {
@@ -61,37 +61,44 @@
 
                     buffer = mediaSource.addSourceBuffer(mimeCodec);
 
-                    buffer.addEventListener('update', function () {
-                        if (queue.length > 0 && !buffer.updating) {
-                            buffer.appendBuffer(queue.shift());
-                        }
-                        if (queue.length == 0 && !buffer.updating) {
-                            mediaSource.endOfStream();
-                        }
-                    });
+                    // buffer.addEventListener('update', function () {
+                    //     if (queue.length > 0 && !buffer.updating) {
+                    //         buffer.appendBuffer(queue.shift());
+                    //     }
+                    //     if (queue.length == 0 && !buffer.updating) {
+                    //         mediaSource.endOfStream();
+                    //     }
+                    // });
+
                 }, false);
 
                 ws.addEventListener('message', function (e) {
-                    //console.log(e, buffer.buffered) // string:action json&data
+                    console.log(e)
                     if (typeof e.data !== 'string') {
                         if (buffer.updating || queue.length > 0) {
                             queue.push(e.data);
                         } else {
                             buffer.appendBuffer(e.data);
                         }
+
                     } else {
                         var action = '' + JSON.parse(e.data).action;
-                        //console.log(action);
                         if (action == 'connected') {
                             ws.send(JSON.stringify({
                                 action: "REQUESTSTREAM"
                             }))
                         }
                         if (action == 'end') {
-                            mediaSource.endOfStream();
+                            // mediaSource.endOfStream();
                         }
                     }
-                }, false);
+
+                    buffer.addEventListener('updateend', function () {
+                        // chrome66 禁止自动播放
+                        //video.play();
+                        //mediaSource.start(0);
+                    })
+                });
             } else {
                 console.error('Unsupported MIME type or codec: ', mimeCodec);
             }
