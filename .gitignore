@@ -10,3 +10,5 @@ wiki
 
 /ayaya/node_modules/*
 */node_modules/*
+
+./websocket_video_blob
