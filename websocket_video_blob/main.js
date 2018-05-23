@@ -94,7 +94,7 @@ class WSocket {
     constructor(port) {
         this.store = [];
         this.wss = new WebSocketServer({
-            host: '192.168.1.113',
+            host: '0.0.0.0',
             port: 1999
         });
 

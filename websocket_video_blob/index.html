@@ -73,7 +73,7 @@
                 }, false);
 
                 ws.addEventListener('message', function (e) {
-                    console.log(e)
+                    // console.log(e)
                     if (typeof e.data !== 'string') {
                         if (buffer.updating || queue.length > 0) {
                             queue.push(e.data);
