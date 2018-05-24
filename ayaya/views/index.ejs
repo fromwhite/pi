@@ -5,11 +5,17 @@
         </span>
         <div class="post">
             <ul class="listing">
-                <li class="listing-seperator">2017</li>
-                <li class="listing-item">
-                    <time datetime="2017-12-31">2017-12-31</time>
-                    <a href="" title="2017">2017</a>
-                </li>
+                <!-- <li class="listing-seperator">2017</li> -->
+                <% for(let item in cache) {%>
+                    <li class="listing-item">
+                        <time datetime="<%= item %>">
+                            <%= item %>
+                        </time>
+                        <a href="<%= cache[item] %>" title="2017">
+                            <%= cache[item] %>
+                        </a>
+                    </li>
+                    <% } %>
             </ul>
         </div>
     </article>

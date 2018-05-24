@@ -30,7 +30,7 @@ async function logger(ctx, next) {
 }
 
 // app.use(logger);
-// app.use(face.file);
+app.use(face.file);
 
 // 单核套路云 直接写内存
 let store = {

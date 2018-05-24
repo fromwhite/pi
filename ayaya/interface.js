@@ -29,7 +29,8 @@ async function index(ctx, next) {
     await ctx.render('default', {
         title,
         id,
-        tag
+        tag,
+        cache
     })
 }
 async function lab(ctx, next) {
@@ -101,24 +102,35 @@ async function loginEvt(ctx, next) {
 //     let url = ctx.request.url.replace(/^[1-9]\d*$/,'')
 //     await Router[url][method](ctx, next)
 //}
-
-// 按时间排序 读取文件到目录
+let cache = {};
 async function file(ctx, next) {
-
     const base = './post/';
     const files = fs.readdirSync(base);
     files.sort(function (a, b) {
         let astat = fs.lstatSync(base + a);
         let bstat = fs.lstatSync(base + b);
-        return bstat.mtime - astat.mtime;
+        return bstat.atime - astat.atime;
+    });
+    files.forEach(function (filename) {
+        if (!/\.md$/.test(filename)) {
+            return;
+        }
+        // 按序读取文件名 写入到缓存文件cache "2018-1-1":"路过深圳"
+        let tag = /#(.*)\./.test(filename) ? RegExp.$1 : 'null';
+        let filepath = path.resolve(base, filename);
+        let timeline = fs.lstatSync(filepath).atime;
+        let time = timeline.getFullYear() + '-' + timeline.getMonth() + '-' + timeline.getDay();
+        cache[time] = filepath;
+
+        let source = fs.readFileSync(filepath, "utf-8").toString();
+        let title = /--- (.*) ---/.test(source) ? RegExp.$1 : 'null';
+
     });
 
     await next()
 
 }
 // 逻辑开关 todo
-
-
 
 module.exports = {
     index,
