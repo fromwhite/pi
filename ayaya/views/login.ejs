@@ -1,135 +1,84 @@
-<!DOCTYPE html>
-<html>
+<section class="main content">
+    <div class="wrapper">
+        <form class="login-form" action="/login" method="POST">
+            <h1>
 
-<head>
-    <meta charset="utf-8">
-    <title>
-        <%= title %>
-    </title>
-    <meta name="description" content="ayayaxd" />
-    <meta name="Referrer" content="unsafe-url">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="dns-prefetch" href="//static">
-    <link rel="icon" href="/images/favico.ico" type="image/icon" />
-    <link rel="stylesheet" href="/stylesheets/main.css" type="text/css">
-    <script src="/javascripts/main.js"></script>
-</head>
+            </h1>
+            <div class="item">
+                <label for="UserName">登录名：</label>
+                <input type="text" class="login-int" id="UserName" name="UserName" placeholder='输入用户名' maxlength="20" tabindex='1' />
+            </div>
+            <div class="item">
+                <label for="UserPwd">密码：</label>
+                <input type="password" class="login-int" id="UserPwd" name="UserPwd" placeholder='输入密码' maxlength="12" tabindex='2' />
+            </div>
+            <div class="item">
+                <label class="login-form-cell">&nbsp;</label>
+                <input type="button" id="login_btn_submit" class="login-btn" name="login" value="登录" tabindex='3' />
+            </div>
+        </form>
+        <script src="http://libs.cdnjs.net/blueimp-md5/1.0.1/js/md5.min.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", main, false);
 
-<body>
-
-    <header>
-        <hgroup>
-            <a href="https://github.com/vvinc">GitHub</a>
-        </hgroup>
-        <nav>
-            <ul>
-                <li>
-                    <a href="/" class="<%= title == '首页' ? 'on' : '' %>">全部文章</a>
-                </li>
-                <li>
-                    <a href="/lab" class="<%= title == 'h5test' ? 'on' : '' %>">h5test</a>
-                </li>
-                <li class="hid">
-                    <a href="/top" class="<%= title == 'Top' ? 'on' : '' %>">榜单</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
-
-    <section class="main content">
-        <div class="wrapper">
-            <form class="login-form" action="/login" method="POST">
-                <h1>
-
-                </h1>
-                <div class="item">
-                    <label for="UserName">登录名：</label>
-                    <input type="text" class="login-int" id="UserName" name="UserName" placeholder='输入用户名' maxlength="20" tabindex='1' />
-                </div>
-                <div class="item">
-                    <label for="UserPwd">密码：</label>
-                    <input type="password" class="login-int" id="UserPwd" name="UserPwd" placeholder='输入密码' maxlength="12" tabindex='2' />
-                </div>
-                <div class="item">
-                    <label class="login-form-cell">&nbsp;</label>
-                    <input type="button" id="login_btn_submit" class="login-btn" name="login" value="登录" tabindex='3' />
-                </div>
-            </form>
-            <script src="http://libs.cdnjs.net/blueimp-md5/1.0.1/js/md5.min.js"></script>
-            <script>
-                document.addEventListener("DOMContentLoaded", main, false);
-
-                function main() {
-                    // enter
-                    document.onkeydown = function (e) {
-                        var e = e || window.event;
-                        if (e.keyCode == 13) {
-                            if (document.getElementById('UserPwd').value && document.getElementById('UserPwd').value) {
-                                login();
-                            } else {
-                                return false;
-                            }
-                        }
-                    }
-                    // submit
-                    document.getElementById('login_btn_submit').addEventListener('click', function () {
-
-                        if (document.getElementById('UserName').value && document.getElementById('UserPwd').value) {
+            function main() {
+                // enter
+                document.onkeydown = function (e) {
+                    var e = e || window.event;
+                    if (e.keyCode == 13) {
+                        if (document.getElementById('UserPwd').value && document.getElementById('UserPwd').value) {
                             login();
                         } else {
                             return false;
                         }
-                    })
-
-                    // login
-                    function login() {
-                        console.log(00, md5(document.getElementById('UserPwd').value))
-                        _.push('/login', "username=" + document.getElementById('UserName').value + "&userpass=" +
-                            md5(document.getElementById('UserPwd').value),
-                            function (res) {
-                                console.log(res, 11, md5(document.getElementById('UserPwd').value))
-                                var res = JSON.parse(res);
-
-                                if (res != null && res.code) {
-                                    var retVal = parseInt(res.code);
-
-                                    switch (retVal) {
-                                        case 2:
-                                            alert('输入有误');
-                                            break;
-                                        case 0:
-                                            alert('登录失败');
-                                            break;
-                                        case 1:
-                                            //alert('登录成功!');
-                                            location.href = '/'
-                                            break;
-                                        case 11:
-                                            alert('用户名或者密码错误');
-                                            break;
-                                        case 12:
-                                            alert('用户不存在');
-                                            break;
-                                    }
-                                } else {
-                                    alert('操作失败');
-                                }
-                            })
                     }
                 }
-            </script>
-        </div>
-    </section>
+                // submit
+                document.getElementById('login_btn_submit').addEventListener('click', function () {
 
+                    if (document.getElementById('UserName').value && document.getElementById('UserPwd').value) {
+                        login();
+                    } else {
+                        return false;
+                    }
+                })
 
-    <footer class="main">
-        <div class="wrapper">
-            &copy;21ms
-        </div>
-    </footer>
+                // login
+                function login() {
+                    console.log(00, md5(document.getElementById('UserPwd').value))
+                    _.push('/login', "username=" + document.getElementById('UserName').value + "&userpass=" +
+                        md5(document.getElementById('UserPwd').value),
+                        function (res) {
+                            console.log(res, 11, md5(document.getElementById('UserPwd').value))
+                            var res = JSON.parse(res);
 
-</body>
+                            if (res != null && res.code) {
+                                var retVal = parseInt(res.code);
 
-</html>
+                                switch (retVal) {
+                                    case 2:
+                                        alert('输入有误');
+                                        break;
+                                    case 0:
+                                        alert('登录失败');
+                                        break;
+                                    case 1:
+                                        //alert('登录成功!');
+                                        location.href = '/'
+                                        break;
+                                    case 11:
+                                        alert('用户名或者密码错误');
+                                        break;
+                                    case 12:
+                                        alert('用户不存在');
+                                        break;
+                                }
+                            } else {
+                                alert('操作失败');
+                            }
+                        })
+                }
+            }
+        </script>
+    </div>
+</section>

@@ -34,23 +34,26 @@ function isEmpty(obj) {
 async function index(ctx, next) {
     //   console.log(ctx, ctx.request.method, 'index.get')
     const title = '首页'
-    const id = 1;
-    const result = 1;
-    await ctx.render('index', {
+    const id = ctx.session.id || null;
+
+    const tag = 'index'
+
+    await ctx.render('default', {
         title,
         id,
-        result
+        tag
     })
 }
 async function lab(ctx, next) {
     // 测试页面 lab路由重定向sprite
     const title = 'h5test'
-    const id = 1;
-    const papa = 1;
-    await ctx.render('lab', {
+    const id = ctx.session.id || null;
+
+    const tag = 'lab'
+    await ctx.render('default', {
         title,
         id,
-        papa
+        tag
     })
 }
 async function login(ctx, next) {
@@ -60,13 +63,15 @@ async function login(ctx, next) {
         await ctx.redirect('/');
     }
 
-    const title = '首页'
+    const title = '登录'
+
     const id = 1;
-    const result = 1;
-    await ctx.render('login', {
+
+    const tag = 'login'
+    await ctx.render('default', {
         title,
         id,
-        result
+        tag
     })
 }
 async function loginEvt(ctx, next) {
