@@ -18,18 +18,6 @@ const retCode = {
     UserNotExist: 12, //用户不存在    
 };
 
-// tools
-function isEmpty(obj) {
-    var key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            return false;
-        }
-    }
-    return true;
-}
-
-
 // 路由
 async function index(ctx, next) {
     //   console.log(ctx, ctx.request.method, 'index.get')
@@ -114,25 +102,18 @@ async function loginEvt(ctx, next) {
 //     await Router[url][method](ctx, next)
 //}
 
-// POST:markdown目录 文件改动重写cache
-let cache = {}
 // 按时间排序 读取文件到目录
 async function file(ctx, next) {
 
-    if (isEmpty(cache)) {
-        const base = './post/';
-        const files = fs.readdirSync(base);
-        files.sort(function (a, b) {
-            let astat = fs.lstatSync(base + a);
-            let bstat = fs.lstatSync(base + b);
-            return bstat.mtime - astat.mtime;
-        });
+    const base = './post/';
+    const files = fs.readdirSync(base);
+    files.sort(function (a, b) {
+        let astat = fs.lstatSync(base + a);
+        let bstat = fs.lstatSync(base + b);
+        return bstat.mtime - astat.mtime;
+    });
 
-        await next()
-    } else {
-        // 不为空
-        await next()
-    }
+    await next()
 
 }
 // 逻辑开关 todo
