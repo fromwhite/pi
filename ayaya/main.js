@@ -12,6 +12,7 @@ router.get('/', face.index)
     .get('/lab', face.lab)
     .get('/login', face.login)
     .post('/login', face.loginEvt)
+    .get('/post/:name', face.post)
     .get('*', async (ctx, next) => {
         ctx.status = 404
         ctx.body = '404'

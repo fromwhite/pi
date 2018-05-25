@@ -21,10 +21,10 @@ const retCode = {
 // 路由
 async function index(ctx, next) {
     //   console.log(ctx, ctx.request.method, 'index.get')
-    const title = '首页'
-    const id = ctx.session.id || null;
+    let title = '首页'
+    let id = ctx.session.id || null;
 
-    const tag = 'index'
+    let tag = 'index'
 
     await ctx.render('default', {
         title,
@@ -35,10 +35,10 @@ async function index(ctx, next) {
 }
 async function lab(ctx, next) {
     // 测试页面 lab路由重定向sprite
-    const title = 'h5test'
-    const id = ctx.session.id || null;
+    let title = 'h5test'
+    let id = ctx.session.id || null;
 
-    const tag = 'lab'
+    let tag = 'lab'
     await ctx.render('default', {
         title,
         id,
@@ -46,17 +46,16 @@ async function lab(ctx, next) {
     })
 }
 async function login(ctx, next) {
-
     //判断登录 未登录选择路由 已登陆重定向首页
     if (!!ctx.session && ctx.session.id) {
         await ctx.redirect('/');
     }
 
-    const title = '登录'
+    let title = '登录'
 
-    const id = 1;
+    let id = 1;
 
-    const tag = 'login'
+    let tag = 'login'
     await ctx.render('default', {
         title,
         id,
@@ -67,7 +66,7 @@ async function loginEvt(ctx, next) {
 
     let form = ctx.request.body
 
-    const args = {
+    let args = {
         name: form.username,
         passwd: form.userpass
     }
@@ -104,8 +103,8 @@ async function loginEvt(ctx, next) {
 //}
 let cache = {};
 async function file(ctx, next) {
-    const base = './post/';
-    const files = fs.readdirSync(base);
+    let base = './post/';
+    let files = fs.readdirSync(base);
     files.sort(function (a, b) {
         let astat = fs.lstatSync(base + a);
         let bstat = fs.lstatSync(base + b);
@@ -115,7 +114,6 @@ async function file(ctx, next) {
         if (!/\.md$/.test(filename)) {
             return;
         }
-        // 按序读取文件名 写入到缓存文件cache "2018-1-1":"路过深圳"
         let tag = /#(.*)\./.test(filename) ? RegExp.$1 : 'null';
         let filepath = path.resolve(base, filename);
         let timeline = fs.lstatSync(filepath).atime;
@@ -130,12 +128,40 @@ async function file(ctx, next) {
     await next()
 
 }
-// 逻辑开关 todo
+
+async function post(ctx, next) {
+    let title = ctx.params.name;
+    let id = ctx.session.id || 1;
+    let tag = 'post'
+    // 获取缓存文件
+    let base = './cache/';
+    let files = fs.readdirSync(base);
+    console.log(title, files, 0)
+
+    if (files.includes(title + '.html')) {
+        // 已缓存直接读取
+        await ctx.redirect('/cache/' + title + '.html');
+    } else {
+        // 未缓存 md2html
+
+    }
+
+
+    // await ctx.render('default', {
+    //     title,
+    //     id,
+    //     tag,
+    //     cache
+    // })
+}
+
+
 
 module.exports = {
     index,
     lab,
     login,
     loginEvt,
-    file
+    file,
+    post
 }

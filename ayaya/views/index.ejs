@@ -11,8 +11,8 @@
                         <time datetime="<%= item %>">
                             <%= item %>
                         </time>
-                        <a href="<%= cache[item] %>" title="2017">
-                            <%= cache[item] %>
+                        <a href="<%= cache[item].match(/ayaya\/(\S*)\.md/)[1] %>" title="2017">
+                            <%= cache[item].match(/post\/(\S*)\.md/)[1] %>
                         </a>
                     </li>
                     <% } %>
