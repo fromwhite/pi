@@ -48,7 +48,7 @@ let store = {
 }
 
 app.use(session({
-    key: 'Aayaya .sO*19?96%jk$zx',
+    key: 'Aayaya .*?%',
     maxAge: 3600000 * 24 * 30,
     overwrite: true,
     httpOnly: true,
@@ -56,7 +56,6 @@ app.use(session({
     sign: true,
     store: store
 }, app))
-
 
 app.use(bodyParser({
     enableTypes: ['json', 'form', 'text']

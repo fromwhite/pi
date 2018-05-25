@@ -1,7 +1,7 @@
 const fs = require("fs"),
-    path = require("path");
+    path = require("path"),
+    marked = require('marked');
 
-// 常量配置
 let key = {
     Id: '01',
     name: 'root',
@@ -124,9 +124,7 @@ async function file(ctx, next) {
         let title = /--- (.*) ---/.test(source) ? RegExp.$1 : 'null';
 
     });
-
     await next()
-
 }
 
 async function post(ctx, next) {
@@ -134,17 +132,42 @@ async function post(ctx, next) {
     let id = ctx.session.id || 1;
     let tag = 'post'
     // 获取缓存文件
-    let base = './cache/';
+    let base = './views/cache';
     let files = fs.readdirSync(base);
     console.log(title, files, 0)
 
-    if (files.includes(title + '.html')) {
-        // 已缓存直接读取
-        await ctx.redirect('/cache/' + title + '.html');
-    } else {
-        // 未缓存 md2html
-
+    if (!files.includes(title + '.html')) {
+        // md2html
+        console.log('md2html', 1)
+        await fs.readFileSync('./views/template.html', 'utf8', (err, template) => {
+            if (err) {
+                throw err
+            } else {
+                fs.readFileSync('./post' + title + '.md', 'utf8', (err, markContent) => {
+                    if (err) {
+                        throw err
+                    } else {
+                        let htmlStr = marked(markContent.toString());
+                        template = template.replace('{{title}}', title);
+                        template = template.replace('{{markContext}}', htmlStr);
+                        fs.writeFile('./views/cache/' + title + '.html', template, err => {
+                            if (err) {
+                                throw err
+                            } else {
+                                console.log("Cache [%s] success", title)
+                            }
+                        })
+                    }
+                })
+            }
+        })
     }
+
+    await ctx.render('./cache/' + title + '.html', {
+        map: {
+            html: 'nunjucks'
+        }
+    });
 
 
     // await ctx.render('default', {
