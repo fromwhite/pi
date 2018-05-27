@@ -12,3 +12,5 @@ wiki
 */node_modules/*
 
 /websocket_video_blob
+/ayaya
+/ws
