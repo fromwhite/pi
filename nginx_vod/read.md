@@ -33,6 +33,7 @@ nginx -v
 重启某服务 systemctl restart xx.service
 使某服务不自动启动 systemctl disable xx.service
 使某服务自动启动 systemctl enable xx.service
+在debian9的位置 /lib/systemd/system/ bak备存强制中止服务
 ```
 
 ##### 开启一个点播服务    
