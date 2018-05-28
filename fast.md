@@ -35,6 +35,12 @@ connmanctl
 > quite # 退出
 ```
 
+### 添加公共用户pi
+```
+useradd -g root -d/home/pi -m pi -s /bin/bash
+passwd pi
+```
+
 ### 挂载u盘
 原理：
 在Linux中，插入U盘，系统识别后，则会自动在 /dev 目录增加一个设备文件，  名为 /dev/sda1 或 sda2 或 sdb1...
