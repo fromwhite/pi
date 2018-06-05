@@ -1,0 +1,181 @@
+const fs = require("fs"),
+    path = require("path"),
+    marked = require('marked');
+
+let key = {
+    Id: '01',
+    name: 'root',
+    // 123456
+    passwd: 'e10adc3949ba59abbe56e057f20f883e'
+}
+const retCode = {
+    SessionExpired: -1, //session过期
+    Fail: 0, //失败
+    Success: 1, //成功
+    ArgsError: 2, //参数错误
+    UserExisted: 10, //用户已经存在
+    UsernameOrPasswordError: 11, //用户名或者密码错误      
+    UserNotExist: 12, //用户不存在    
+};
+
+async function logger(ctx, next) {
+    // console.log('request url:', ctx.url);
+    const start = new Date();
+    await next()
+    console.log(`method: ${ctx.method} code: ${ctx.status} time:${new Date - start}ms`);
+    // console.log(ctx.ms, 12)
+}
+
+// 路由
+async function index(ctx, next) {
+    //   console.log(ctx, ctx.request.method, 'index.get')
+    let title = '首页'
+    let id = ctx.session.id || null;
+
+    let tag = 'index'
+
+    await ctx.render('default', {
+        title,
+        id,
+        tag,
+        cache
+    })
+}
+async function lab(ctx, next) {
+    // 测试页面 lab路由重定向sprite
+    let title = 'h5test'
+    let id = ctx.session.id || null;
+
+    let tag = 'lab'
+    await ctx.render('default', {
+        title,
+        id,
+        tag
+    })
+}
+async function login(ctx, next) {
+    //判断登录 未登录选择路由 已登陆重定向首页
+    if (!!ctx.session && ctx.session.id) {
+        await ctx.redirect('/');
+    }
+
+    let title = '登录'
+
+    let id = 1;
+
+    let tag = 'login'
+    await ctx.render('default', {
+        title,
+        id,
+        tag
+    })
+}
+async function loginEvt(ctx, next) {
+
+    let form = ctx.request.body
+
+    let args = {
+        name: form.username,
+        passwd: form.userpass
+    }
+
+    let result = {
+        code: retCode.Success,
+        data: null
+    }
+    // 验证非空
+    if (!args.name || !args.passwd) {
+        result.code = retCode.ArgsError
+    }
+
+    // key 用户名或密码错误
+    if (key.name != args.name || key.passwd != args.passwd) {
+        result.code = retCode.UsernameOrPasswordError
+    }
+    // 存入Session中
+    ctx.session = {
+        id: key.Id,
+        name: key.name,
+    }
+
+    next();
+    ctx.body = result;
+}
+
+// 路由表映射
+// async function action(ctx, next) {
+//     let method = ctx.request.method;
+//     //let url = ctx.request.url.replace(/\//, '') || '/';
+//     let url = ctx.request.url.replace(/^[1-9]\d*$/,'')
+//     await Router[url][method](ctx, next)
+//}
+let cache = {};
+async function file(ctx, next) {
+    let base = './post/';
+    let files = fs.readdirSync(base);
+    files.sort(function (a, b) {
+        let astat = fs.lstatSync(base + a);
+        let bstat = fs.lstatSync(base + b);
+        return bstat.mtime - astat.mtime;
+    });
+    files.forEach(function (filename) {
+        if (!/\.md$/.test(filename)) {
+            return;
+        }
+        let tag = /#(.*)\./.test(filename) ? RegExp.$1 : 'null';
+        let filepath = path.join(base, filename);
+        let timeline = fs.lstatSync(filepath).atime;
+        let time = timeline.getFullYear() + '-' + (timeline.getMonth() + 1) + '-' + timeline.getDate();
+        // 插入年份
+        let years = Object.keys(cache)
+        if (years.length == 0) {
+            // 第一项
+            cache[timeline.getFullYear()] = null
+            cache[time] = filepath;
+        } else {
+            // 非第一项
+            let last = Number(years[years.length - 1].toString().substr(0, 4))
+            let then = timeline.getFullYear()
+            if (Object.is(last, then)) {
+                cache[time] = filepath;
+            } else {
+                cache[timeline.getFullYear()] = null
+                cache[time] = filepath;
+            }
+        }
+
+        // let source = fs.readFileSync(filepath, "utf-8").toString();
+        // let title = /--- (.*) ---/.test(source) ? RegExp.$1 : 'null';
+
+    });
+    await next()
+}
+
+async function post(ctx, next) {
+    let title = ctx.params.name;
+    let id = ctx.session.id || 1;
+    let tag = 'post'
+    // 获取缓存文件
+    let base = './views/cache';
+    let files = fs.readdirSync(base);
+    if (!files.includes(title + '.html')) {
+        // md2html
+        let template = fs.readFileSync('./views/template.html', 'utf8').toString()
+        let mdContent = fs.readFileSync('./post/' + title + '.md', 'utf8').toString()
+        let htmlStr = marked(mdContent);
+        template = template.replace(/{{title}}/g, title);
+        template = template.replace(/{{markContext}}/g, htmlStr);
+        fs.writeFileSync('./views/cache/' + title + '.html', template);
+    }
+
+    await ctx.render('./cache/' + title + '.html', {
+        map: {
+            html: 'nunjucks'
+        }
+    });
+}
+
+module.exports = {
+    index,
+    lab,login,loginEvt,post
+}
