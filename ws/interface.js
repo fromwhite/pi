@@ -6,7 +6,7 @@ const readline = require('readline');
 
 let key = {
     Id: '01',
-    name: 'root',
+    name: 'secret',
     // 123456
     passwd: 'e10adc3949ba59abbe56e057f20f883e'
 }
@@ -169,10 +169,29 @@ async function getPost(ctx, next, title) {
 
         // })
 
-        // let mdContent = fs.readFileSync('./post/' + title + '.md', 'utf8').toString()
-        // let result = mdContent.match(/---(.*?)---(.*?)$/)
-        // console.log(mdContent,result, 1)
-        // return false
+        let mdContent = fs.readFileSync('./post/' + title + '.md', 'utf8').toString()
+        let result = mdContent.split('---')
+        let tl = result[1].replace(/\n/g, '').match(/^title:(.*?)date:(.*?)tag:(.*?)$/)
+        let time = tl[2]
+        let tags = tl[3]
+        let tagTemplate = '<a href="/archive#{{tag}}" title="linux">#{{tag}}</a>'
+        let regTesmplate = ''
+        if (tags.includes(',')) {
+            tags = tags.split(',')
+            tags.map(value => {
+                // 去掉前后空格   去掉中间空格replace(/\s/g,"") 去掉所有html标签replace(/<\/?[^>]*>/gim,"")
+                regTesmplate += tagTemplate.replace(/{{tag}}/g, value.replace(/(^\s+)|(\s+$)/g, ""))
+            })
+        } else {
+            regTesmplate = tagTemplate.replace(/{{tag}}/g, tags.replace(/(^\s+)|(\s+$)/g, ""))
+        }
+        let md = result[2]
+        let htmlStr = marked(md);
+        template = template.replace(/{{title}}/g, title);
+        template = template.replace(/{{markContext}}/g, htmlStr);
+        template = template.replace(/{{time}}/, time)
+        template = template.replace(/{{tag}}/g, regTesmplate)
+        fs.writeFileSync('./views/cache/' + title + '.html', template);
     }
     await next()
 }

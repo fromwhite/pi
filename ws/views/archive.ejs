@@ -1,13 +1,13 @@
 <section class="main content">
     <article>
         <span class="title">
-            <h2>archive</h2>
+            <h2>全部文章</h2>
         </span>
         <div class="post">
             <ul class="listing">
                 <% for(let {title:titleVal,date:dateVal,tag:tagVal,path:pathVal} of cache) {%>
                     <% if(!!titleVal) { %>
-                        <li class="listing-item">
+                        <li class="listing-item <%= tagVal.replace(/,/,' ') %>">
                             <time datetime="<%= dateVal %>">
                                 <%= dateVal %>
                             </time>
@@ -24,3 +24,23 @@
         </div>
     </article>
 </section>
+<script>
+    document.addEventListener('hashchange', function () {
+        tag()
+    })
+
+    function tag() {
+        var hash = location.hash.replace('#', '')
+        var tagList = document.getElementsByClassName(hash)
+        if (tagList.length == 0) return;
+        var list = document.getElementsByTagName('li')
+        for (var i = 0; i < list.length; i++) {
+            list[i].className += ' ' + 'hid'
+        }
+        for (var j = 0; j < tagList.length; j++) {
+            var result = new RegExp("(\\s|^)" + 'hid' + "(\\s|$)")
+            tagList[j].className = tagList[j].className.replace(result, '')
+        }
+    }
+    tag()
+</script>

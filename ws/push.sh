@@ -10,7 +10,7 @@ case $input in
 Y|y)
 echo  "Start sync"
 #rsync -avn -e 'ssh -p22' --rsh=ssh  ./* pi@118.25.4.216:./ayaya --exclude 'node_modules/*'
-rsync -vazu --exclude 'node_modules/*' -progress --rsh=ssh ./ pi@118.25.4.216:./ayaya/
+rsync -vazu --exclude 'node_modules/*' -progress --rsh=ssh ./ user@ip:./ayaya/
 exit
 ;;
 N|n)
