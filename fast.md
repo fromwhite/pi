@@ -68,6 +68,8 @@ sudo mount  /dev/sda4 /mnt/8g_flash
 用完之后卸载
 ```
 sudo umount /mnt/8g_flash
+可能提示异常 /mnt/8g_flash target is busy
+则查找与/mnt/8g_flash相关进程 lsof /mnt/8g_flash 并kill %%
 ```
 
 ### 从sd卡开机
