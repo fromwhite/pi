@@ -191,7 +191,8 @@ async function getPost(ctx, next, title) {
         template = template.replace(/{{markContext}}/g, htmlStr);
         template = template.replace(/{{time}}/, time)
         template = template.replace(/{{tag}}/g, regTesmplate)
-        console.log(template, 1)
+        // 在img后加入图片最大宽度 width=400
+        template = template.replace(/(<img[^>]*)(\/?>)/gi, "$1 width=400 $2")
         fs.writeFileSync('./views/cache/' + title + '.html', template);
     }
     await next()

@@ -214,5 +214,9 @@ rm -f .git/index.lock
 * 匹配img自定义属性data <img data="/home" class="" src="" />
 var reg=/<img[^>]+data[=\'\"\s]+([^\'\"]*)[\'\"]?[\s\S]*/i;
 str = str.replace(reg,"$1");
+* 一编文章里有很多<img src=""><img src="">向里边加width="100%"
+var reg = /(<img[^>]*)(\/?>)/gi;
+var html = "";
+html = html.replace(reg, "$1width='100%' $2");
 ```
 to be continued
