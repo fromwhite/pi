@@ -283,3 +283,11 @@ code {
     display: block;
     margin: .5em auto;
 }
+
+.meta .tags a {
+    padding: .25em;
+}
+
+.title h2 {
+    color: #777
+}

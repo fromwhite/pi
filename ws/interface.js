@@ -174,7 +174,7 @@ async function getPost(ctx, next, title) {
         let tl = result[1].replace(/\n/g, '').match(/^title:(.*?)date:(.*?)tag:(.*?)$/)
         let time = tl[2]
         let tags = tl[3]
-        let tagTemplate = '<a href="/archive#{{tag}}" title="linux">#{{tag}}</a>'
+        let tagTemplate = '<a href="/archive#{{tag}}" title="{{tag}}">#{{tag}}</a>'
         let regTesmplate = ''
         if (tags.includes(',')) {
             tags = tags.split(',')
@@ -191,6 +191,7 @@ async function getPost(ctx, next, title) {
         template = template.replace(/{{markContext}}/g, htmlStr);
         template = template.replace(/{{time}}/, time)
         template = template.replace(/{{tag}}/g, regTesmplate)
+        console.log(template, 1)
         fs.writeFileSync('./views/cache/' + title + '.html', template);
     }
     await next()

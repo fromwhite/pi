@@ -10,3 +10,4 @@ requirements: c/c++/python/shell/nginx/nodejs
 - [x] nginx_vod nginx-rtmp推流，nginx代理vod list页面，vlc schemes播放rtmp流
 - [x] websocket_video_blob websocket推流，前端喂video blob,backup
 - [x] ayaya nodejs／koa2最小实现登录注册留言，backup ayaya-mysql
+- [x] ws 类似ruby on rails的jekyll。包括md2html/Publish page/h5test暂未添加websocket通讯，backup

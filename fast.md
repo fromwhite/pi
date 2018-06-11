@@ -206,4 +206,11 @@ git clean 参数
 Git出现Unable to create 'E:/xxx/.git/index.lock': File exists.的解决办法(注意路径)
 rm -f .git/index.lock
 ```
+
+### 正则笔记
+```
+* 匹配img自定义属性data <img data="/home" class="" src="" />
+var reg=/<img[^>]+data[=\'\"\s]+([^\'\"]*)[\'\"]?[\s\S]*/i;
+str = str.replace(reg,"$1");
+```
 to be continued
