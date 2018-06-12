@@ -10,7 +10,7 @@ router.get('/', async (ctx, next) => {
     }
 
     let title = '登录'
-    let id = 0;
+    let id = ctx.session.id;
     let tag = 'login'
     await ctx.render('default', {
         title,

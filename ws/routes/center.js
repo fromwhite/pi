@@ -9,7 +9,7 @@ router.get('/', async (ctx, next) => {
     }
 
     let title = 'top'
-    let id = 0;
+    let id = ctx.session.id;
     let tag = 'center'
     await ctx.render('default', {
         title,
