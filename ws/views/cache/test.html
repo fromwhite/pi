@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>
-        <%= title %>
+        test
     </title>
     <meta name="description" content="" />
     <meta name="Referrer" content="unsafe-url">
@@ -15,7 +15,6 @@
     <link rel="icon" href="/images/favico.ico" type="image/icon" />
     <link rel="stylesheet" href="/main.css" type="text/css">
     <script src="/main.js"></script>
-    <script src="/retina.min.js"></script>
 </head>
 
 <body>
@@ -37,25 +36,34 @@
             <span>
                 <a class="" href="https://github.com/vvinc">github</a>
             </span>
-            <% if(!id){ %>
-                <span>
-                    <a class="" href="/login">sigin</a>
-                </span>
-                <% } else {%>
-                    <span>
-                        <a href="/center">top</a>
-                    </span>
-                    <% } %>
-        </nav>
+
     </header>
+    <section class="main title">
+        <h2>test</h2>
+    </section>
+    <section class="main meta">
+        <span class="time">
+            <time> 2012-1-1</time>
+        </span>
 
-    <%- include(tag, null) %>
+        <span class="tags">
+            <a href="/archive#photography" title="photography">#photography</a><a href="/archive#live" title="live">#live</a>
+        </span>
+        <span class="issue-wrapper">
+            <span class="issue-button"></span>
+            <a href="https://github.com/vvinc" class="issue-count">issue</a>
+        </span>
+    </section>
+    <section class="main content">
+        <p>路过深圳 test2</p>
 
-        <footer class="main">
-            <div class="wrapper">
-                &copy; 2018
-            </div>
-        </footer>
+    </section>
+
+    <footer class="main">
+        <div class="wrapper">
+            &copy; 2018
+        </div>
+    </footer>
 
 </body>
 

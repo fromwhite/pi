@@ -1,8 +1,7 @@
 const fs = require("fs"),
     path = require("path"),
+    readline = require('readline')
     marked = require('marked');
-
-const readline = require('readline');
 
 let key = {
     Id: '01',
