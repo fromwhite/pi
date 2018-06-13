@@ -5,6 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "ejs": "^2.5.8",
+    "formidable": "^1.2.1",
     "koa": "^2.5.0",
     "koa-json": "^2.0.2",
     "koa-router": "^7.4.0",

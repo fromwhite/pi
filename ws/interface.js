@@ -1,7 +1,8 @@
 const fs = require("fs"),
     path = require("path"),
-    readline = require('readline')
-    marked = require('marked');
+    readline = require('readline'),
+    marked = require('marked'),
+    formidable = require("formidable");
 
 let key = {
     Id: '01',
@@ -129,45 +130,6 @@ async function getPost(ctx, next, title) {
     if (!files.includes(title + '.html')) {
         // md2html
         let template = fs.readFileSync('./views/template.html', 'utf8').toString()
-
-        // return new Promise((resolve, reject) => {
-        //     const rl = readline.createInterface({
-        //         input: fs.createReadStream('./post/' + title + '.md'),
-        //         crlfDelay: Infinity
-        //     });
-        //     let mdContent = ''
-        //     rl.on('line', (line) => {
-        //             mdContent = mdContent + line
-        //         })
-        //         .on('close', () => {
-        //             let result = mdContent.match(/---(.*?)---(.*?)$/)
-        //             mdContent = result[2]
-        //             let tl = result[1]
-        //             let titleResult = tl.match(/^title:(.*?)date:(.*?)tag:(.*?)$/)
-        //             let time = titleResult[2]
-        //             let tags = titleResult[3]
-        //             let tagTemplate = '<a href="/archive#{{tag}}" title="linux">#{{tag}}</a>'
-        //             let regTesmplate = ''
-        //             if (tags.includes(',')) {
-        //                 tags = tags.split(',')
-        //                 tags.map(value => {
-        //                     // 去掉前后空格   去掉中间空格replace(/\s/g,"") 去掉所有html标签replace(/<\/?[^>]*>/gim,"")
-        //                     regTesmplate += tagTemplate.replace(/{{tag}}/g, value.replace(/(^\s+)|(\s+$)/g, ""))
-        //                 })
-        //             } else {
-        //                 regTesmplate = tagTemplate.replace(/{{tag}}/g, tags.replace(/(^\s+)|(\s+$)/g, ""))
-        //             }
-        //             let htmlStr = marked(mdContent);
-        //             template = template.replace(/{{title}}/g, title);
-        //             template = template.replace(/{{markContext}}/g, htmlStr);
-        //             template = template.replace(/{{time}}/, time)
-        //             template = template.replace(/{{tag}}/g, regTesmplate)
-        //             fs.writeFileSync('./views/cache/' + title + '.html', template);
-        //             resolve()
-        //         });
-
-        // })
-
         let mdContent = fs.readFileSync('./post/' + title + '.md', 'utf8').toString()
         let result = mdContent.split('---')
         let tl = result[1].replace(/\n/g, '').match(/^title:(.*?)date:(.*?)tag:(.*?)$/)
@@ -196,10 +158,47 @@ async function getPost(ctx, next, title) {
     }
     await next()
 }
+/**
+ * 上次文件 写到post(md) assets(image)
+ * @param {*} ctx 
+ * @param {*} next 
+ */
+async function upfile(ctx, next) {
+    let form = new formidable.IncomingForm()
+    let result = null
+    let filepath = null
+    form.parse(ctx.req, async function (err, fields, files) {
+        if (err) {
+            result = err
+            throw err;
+            return;
+        }
+        // 获取类型 form name
+        let filename = files.file.name
+        const ext = filename.split('.').pop()
+        if (!(!/.(gif|jpg|jpeg|bmp|png)$/.exec(filename))) {
+            // 检测文件格式是为gif,jpg,jpeg,bmp,png ture
+            filepath = '/assets/images'
+        } else if (!(!/.md$/.exec(filename))) {
+            filepath = '/post'
+        } else {
+            result = 'filetype error'
+        }
+
+    });
+
+}
+/**
+ * 侦听post目录，上传/删除md文件 重置cache
+ */
+async function mdFileListener(ctx, next) {
+
+}
 
 module.exports = {
     getList,
     getRetCode,
     getKey,
-    getPost
+    getPost,
+    upfile
 }

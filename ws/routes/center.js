@@ -18,4 +18,8 @@ router.get('/', async (ctx, next) => {
     })
 })
 
+router.post('/', async (ctx, next) => {
+    await helper.upfile(ctx, next)
+})
+
 module.exports = router

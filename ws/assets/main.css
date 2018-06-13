@@ -291,3 +291,58 @@ code {
 .title h2 {
     color: #777
 }
+
+input {
+    border: 1px solid #DBE5DB;
+    border-radius: 2px;
+    width: 200px;
+    padding: 0 8px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+}
+
+input[type=button] {
+    cursor: pointer;
+    background: #f9f9f9;
+    width: 218px;
+    border-radius: 2px;
+    font-size: 12px;
+}
+
+input[type=file] {
+    background: #efefef
+}
+
+.login-form .item {
+    margin: .25em 0;
+}
+
+.item label {
+    width: 6.5em;
+    display: block;
+    font-size: 12px;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+}
+
+input::-ms-clear {
+    display: none;
+}
+
+input:focus {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-user-modify: read-write-plaintext-only;
+}
+
+.fileTag {
+    display: inline-block;
+    line-height: 30px;
+    cursor: pointer;
+    background: #efefef;
+    padding: 0 30px;
+    text-align: center;
+}
