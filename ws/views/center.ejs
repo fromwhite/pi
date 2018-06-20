@@ -11,7 +11,16 @@
 <section class="main content" id="del">
     <h4>删除</h4>
     <div class="wrapper" id="del_wrapper">
-        <a href="javascript:;" onclick="javascript:del(this)" data-origin='webgl 2d渲染 drawImage'>webgl 2d渲染 drawImage</a>
+        <% if(!!list) { %>
+            <% for(let {title:titleVal,date:dateVal,tag:tagVal,path:pathVal} of list) {%>
+                <% if(!!titleVal) { %>
+                    <a href="javascript:;" onclick="javascript:del(this)" data-origin='<%= pathVal %>'>
+                        <%= titleVal %>
+                    </a>
+                    <% } %>
+                        <% }} else { %>
+                            <a href="javascript:;">无可配置选项，或者刷新目录重试！</a>
+                            <% } %>
     </div>
 </section>
 
@@ -19,7 +28,19 @@
     function del(tag) {
         var wrapper = document.getElementById(del_wrapper)
         //wrapper.removeChild(tag)
-        console.log(tag.dataset.origin, tag, 1)
+        //console.log(tag.dataset.origin, tag)
+        var origin = tag.dataset.origin
+        _.push('/del', "origin=" + origin, function (res) {
+            var code = parseInt(res)
+            switch (code) {
+                case 1:
+                    alert('删除成功！');
+                    location.reload();
+                    break;
+                default:
+                    alert('操作异常！')
+            }
+        })
     }
 
     function upload() {
@@ -44,6 +65,12 @@
     }
 
     function uploadStatus(evt) {
-        console.log(evt.target.responseText)
+        switch (parseInt(evt.target.responseText)) {
+            case 1:
+                alert('上传成功！')
+                break;
+            default:
+                alert('操作异常！')
+        }
     }
 </script>

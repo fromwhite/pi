@@ -346,3 +346,7 @@ input:focus {
     padding: 0 30px;
     text-align: center;
 }
+
+#del_wrapper.wrapper a {
+    display: block;
+}

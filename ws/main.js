@@ -8,7 +8,9 @@ const router = require('./routes/default');
 const app = new Koa();
 app.keys = ['ws'];
 
-const store = require('./store').seed
+const store = require('./store')
+app.use(store.mdFileListener)
+
 app.use(session({
     key: 'ws .*?%',
     maxAge: 3600000 * 24 * 30,
@@ -16,7 +18,7 @@ app.use(session({
     httpOnly: true,
     rolling: false,
     sign: true,
-    store: store
+    store: store.seed
 }, app))
 app.use(bodyParser({
     enableTypes: ['json', 'form', 'text'],

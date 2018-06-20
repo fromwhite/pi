@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 router.prefix('/archive')
-const helper = require('./../interface.js')
-const store = require('../store').ListCache
+const helper = require('../store')
+const store = helper.ListCache
 
 router.get('/', async (ctx, next) => {
     let title = '首页'

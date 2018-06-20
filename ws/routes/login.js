@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const helper = require('./../interface.js')
+const helper = require('../store')
 
 router.prefix('/login')
 
