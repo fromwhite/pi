@@ -49,28 +49,6 @@ let ListCache = {
     }
 }
 
-class Event {
-    constructor() {
-        this.subscribers = new Map([
-            []
-        ]);
-    }
-
-    on(type, fn) {
-        let subs = this.subscribers;
-        if (!subs.get(type)) return subs.set(type, [fn]);
-        subs.set(type, (subs.get(type).push(fn)));
-    }
-
-    emit(type, content) {
-        let handlers = this.subscribers.get(type);
-        if (!handlers) return
-        for (let fn of handlers) {
-            fn.apply(this, [].slice.call(arguments, 1));
-        }
-    }
-}
-
 async function getRetCode() {
     return resultCode
 }
@@ -92,21 +70,21 @@ async function getList() {
         }))
     }, Promise.resolve())
     // 排序
-    // cache.sort((a, b) => {
-    //     a = Number(a.date.replace(/-/g, ""))
-    //     b = Number(b.date.replace(/-/g, ""))
-    //     return a - b < 0
-    // })
-    cache.reverse()
+    cache.sort((a, b) => {
+        a = Date.parse(a.date.replace(/-/g, '/'))
+        b = Date.parse(b.date.replace(/-/g, '/'))
+        return a - b < 0
+    })
     // 插入年份date title为空
     let result = []
     let year = null
     cache.map((value, index) => {
         let item = value.date.match(/^(.*?)-/)[1];
+        //2019
         if (!!year) {
             // 去年
             let then = Number(item)
-            if (year == then + 1) {
+            if (year - then) {
                 year = then
                 result.push({
                     title: null,
@@ -156,7 +134,6 @@ function getSource(name, reg = null, line = null) {
         });
         rl.on('close', () => {
             let result = reg ? fileContent.match(reg) : fileContent;
-            // getList 增加path
             resolve({
                 title: result[1],
                 date: result[2],
