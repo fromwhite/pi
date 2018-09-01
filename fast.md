@@ -2,6 +2,7 @@
 目前主要玩的板子是BeagleBone,树莓派玩家注意,部分传感器和gpio硬件不同,纯软件部分标准兼容,所有目录都会单独描述版本和库依赖
 BB最新debian image 默认账户debian temppwd
 ssh登陆之后 增加sudo passwd root密码 然后重置debian账户
+区别于README,本文档主要记录系统修改和配置工具,格式就比较随意了
 
 ### 更新
 ```
@@ -218,5 +219,24 @@ str = str.replace(reg,"$1");
 var reg = /(<img[^>]*)(\/?>)/gi;
 var html = "";
 html = html.replace(reg, "$1width='100%' $2");
+```
+
+************************************
+##### bonebeagle
+```
+* 在sd引导的是ti iot版本的debian9
+*.1 systemd socket启动一个nodejs server给嵌入式板子提供服务，暂时用不上，先修改这个server为推流服务器
+可能存在端口占用 lsof -i:80
+使用systemd禁用多余得socket服务
+显示所有已启动的服务 systemctl list-units --type=service
+检查服务状态 systemctl status xx.service
+停止某服务 systemctl stop xx.service
+启动某服务 systemctl start xx.service
+重启某服务 systemctl restart xx.service
+使某服务不自动启动 systemctl disable xx.service
+使某服务自动启动 systemctl enable xx.service
+在debian9的位置 /lib/systemd/system/ bak备存强制中止服务
+
+访问bb.local:80 激活bonescript服务， systemctl status bonescript.service查看服务配置
 ```
 to be continued
