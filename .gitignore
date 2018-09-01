@@ -3,13 +3,6 @@
 .bash_logout
 .bashrc
 .profile
+.git
 
-wiki
-/hd
-/tag
-/1999
-/ayaya/node_modules/*
 */node_modules/*
-
-/websocket_video_blob
-/ayaya
