@@ -22,19 +22,6 @@ sudo ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
 /* 查看版本信息 */
 nginx -v
 ```
-##### 部分异常
-```
-可能存在端口占用 lsof -i:80
-使用systemd禁用多余得socket服务
-显示所有已启动的服务 systemctl list-units --type=service
-检查服务状态 systemctl status xx.service
-停止某服务 systemctl stop xx.service
-启动某服务 systemctl start xx.service
-重启某服务 systemctl restart xx.service
-使某服务不自动启动 systemctl disable xx.service
-使某服务自动启动 systemctl enable xx.service
-在debian9的位置 /lib/systemd/system/ bak备存强制中止服务
-```
 
 ##### 开启一个点播服务    
 ```
