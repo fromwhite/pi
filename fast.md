@@ -261,5 +261,6 @@ socket激活服务
 systemctl enable ws.socket 
 systemctl daemon-reload
 最后重启
+查看日志 journalctl -u ws.service
 ```
 to be continued
