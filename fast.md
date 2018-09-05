@@ -238,5 +238,28 @@ html = html.replace(reg, "$1width='100%' $2");
 在debian9的位置 /lib/systemd/system/ bak备存强制中止服务
 
 访问bb.local:80 激活bonescript服务， systemctl status bonescript.service查看服务配置
+ Loaded: loaded (/lib/systemd/system/bonescript.service; disabled; vendor preset: enabled)
+   Active: failed (Result: exit-code) since Wed 2018-09-05 11:22:07 CST; 18s ago
+
+阮胖子这里有一个较全的文章说明systemd http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html
+备份 先关闭自启动 有三个文件，来分析一下
+先disble socket 再处理service
+增加一个ws service socket
+unit 连接描述 ws server
+Environment 指定环境变量到 root
+WorkingDirectory 指定目录 /home/pi/ws
+RemainAfterExit 关联状态与连接符unit 这里先去掉这个参数 对进程控制手动grep
+install WantedBy 设置target 这里保持原本的multi-user.target systemctl list-unit-files所有文件中的target与wants配置 level修改参考胖子文章
+socket 默认80端口与socket.target
+在/usr/bin创建 ws.sh脚本 文件备份在ws目录
+保存后
+先载入socket再enable service
+sudo systemctl daemon-reload
+sudo systemctl restart ws.service
+socket激活服务 
+先systemctl disable ws.service 
+systemctl enable ws.socket 
+systemctl daemon-reload
+最后重启
 ```
 to be continued
