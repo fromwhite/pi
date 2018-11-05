@@ -6,7 +6,7 @@ ssh登陆之后 增加sudo passwd root密码 然后重置debian账户
 
 ### 初始化
 ```
-# uname －a   （Linux查看版本当前操作系统内核信息）
+# uname -a   （Linux查看版本当前操作系统内核信息）
 # cat /proc/version （Linux查看当前操作系统版本信息）
 # cat /etc/issue  或cat /etc/redhat-release（Linux查看版本当前操作系统发行版信息
 # cat /proc/cpuinfo （Linux查看cpu相关信息，包括型号、主频、内核信息等）
