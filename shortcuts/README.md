@@ -21,6 +21,12 @@
 ----- | -----
 [BilibiliCover](https://www.icloud.com/shortcuts/011a64eae1924cc0986923a1f6f1dd2a) | b站封面提取
 [TiktokDown](https://www.icloud.com/shortcuts/011a64eae1924cc0986923a1f6f1dd2a) | 抖音去水印下载
+[ins全类型下载](https://www.icloud.com/shortcuts/b031d79c36da498e847b40dd84b32aee) | instagram全类型下载
+[微博热搜榜](https://www.icloud.com/shortcuts/51e8174d96d4431585821be87e4d57f9) | 微博热搜榜
+[快递查询](https://www.icloud.com/shortcuts/3fbb9eac72e546688ecd0b40a154860c) | 常用快递查询
+[知乎日报](https://www.icloud.com/shortcuts/9eee6c39caab4fdb9e62b32d10573901) | 一键查看今日知乎日报
+[照片转GIF](https://www.icloud.com/shortcuts/12f7a7e8c3e64e08b55007e9b2700bc6) | 一键照片转GIF
+[将视频转换为GIF](https://www.icloud.com/shortcuts/a277d6dfe0774a1b81bc8e78a2f89558) | 一键将视频转换为GIF
 
 
 欢迎大伙分享,也可以探讨一下新玩法.<br>
