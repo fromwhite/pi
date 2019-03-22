@@ -27,6 +27,7 @@
 [知乎日报](https://www.icloud.com/shortcuts/9eee6c39caab4fdb9e62b32d10573901) | 一键查看今日知乎日报
 [照片转GIF](https://www.icloud.com/shortcuts/12f7a7e8c3e64e08b55007e9b2700bc6) | 一键照片转GIF
 [将视频转换为GIF](https://www.icloud.com/shortcuts/a277d6dfe0774a1b81bc8e78a2f89558) | 一键将视频转换为GIF
+[短时勿扰](https://www.icloud.com/shortcuts/019964841be84b79baa4de2e30add8eb) | 自定义一个短时间休息的勿扰模式
 
 
 欢迎大伙分享,也可以探讨一下新玩法.<br>
