@@ -14,10 +14,10 @@
 ### 这是一个栗子
 
 这是一个捷径规则，用来索引这里备份的规则(手机此页面太挫,直接app内获取).<br>
-使用Safari打开,点击[GET SHORTCUTS]即可添加到捷径中 [Launcher](todo).
+使用Safari打开,点击[GET SHORTCUTS]即可添加到捷径中 [Launcher](https://www.icloud.com/shortcuts/69a0887c3b5c4b98b3cd47cf7dc43013).
 
 ### 一堆栗子
-名称/链接 | 功能
+链接 | 描述
 ----- | -----
 [BilibiliCover](https://www.icloud.com/shortcuts/011a64eae1924cc0986923a1f6f1dd2a) | b站封面提取
 [TiktokDown](https://www.icloud.com/shortcuts/011a64eae1924cc0986923a1f6f1dd2a) | 抖音去水印下载
