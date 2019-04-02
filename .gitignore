@@ -5,6 +5,7 @@
 .profile
 .git
 ._.DS_Store
+.DS_Store
 */node_modules/*
 
 /ws
