@@ -1,4 +1,4 @@
-/.config
+.config
 .bash_history
 .bash_logout
 .bashrc
@@ -8,4 +8,4 @@
 .DS_Store
 */node_modules/*
 
-/ws
+shortcuts
